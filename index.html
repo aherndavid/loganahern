@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logan Ahern — CV</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        :root {
+            --bg-color: #0b0b0b;
+            --card-bg: #141414;
+            --red: #b81414;
+            --red-dark: #8c0f0f;
+            --text-main: #e0e0e0;
+            --text-muted: #888888;
+            --border-color: #222222;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Space Grotesk', sans-serif;
+            line-height: 1.6;
+            padding: 40px 20px;
+        }
+
+        .cv-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: var(--card-bg);
+            border: 2px solid var(--border-color);
+            padding: 50px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+        }
+
+        header {
+            border-bottom: 3px solid var(--red);
+            padding-bottom: 30px;
+            margin-bottom: 40px;
+        }
+
+        h1 {
+            font-family: 'Anton', sans-serif;
+            font-size: 3.5rem;
+            color: var(--red);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            line-height: 1;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text-muted);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 10px;
+            font-size: 0.9rem;
+            background: #0d0d0d;
+            padding: 15px 20px;
+            border-left: 4px solid var(--red);
+            margin-top: 20px;
+        }
+
+        .contact-grid div {
+            color: var(--text-main);
+        }
+
+        .contact-grid span {
+            color: var(--red);
+            font-weight: 700;
+        }
+
+        section {
+            margin-bottom: 35px;
+        }
+
+        h2 {
+            font-family: 'Anton', sans-serif;
+            font-size: 1.8rem;
+            color: var(--red);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 5px;
+        }
+
+        p {
+            margin-bottom: 15px;
+            font-size: 1rem;
+            color: #cccccc;
+        }
+
+        /* Skills Tags */
+        .skills-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .skill-tag {
+            background-color: #1a1a1a;
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+            padding: 8px 14px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            border-radius: 0;
+            border-left: 3px solid var(--red);
+        }
+
+        /* Experience & Education */
+        .job-item, .edu-item {
+            margin-bottom: 25px;
+        }
+
+        .job-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #ffffff;
+            text-transform: uppercase;
+        }
+
+        .job-company {
+            font-size: 0.95rem;
+            color: var(--red);
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        ul li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+            color: #cccccc;
+        }
+
+        ul li::before {
+            content: "■";
+            position: absolute;
+            left: 0;
+            color: var(--red);
+            font-size: 0.7rem;
+            top: 2px;
+        }
+
+        .short-version-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .short-card {
+            background-color: #0d0d0d;
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            border-top: 3px solid var(--red);
+        }
+
+        .short-card h3 {
+            font-family: 'Anton', sans-serif;
+            font-size: 1.2rem;
+            color: #ffffff;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        .short-card p {
+            font-size: 0.9rem;
+            margin-bottom: 0;
+            color: var(--text-muted);
+        }
+
+        footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        footer span {
+            color: var(--red);
+            font-weight: 700;
+        }
+
+        .footer-actions {
+            margin-top: 15px;
+            text-align: right;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .small-btn {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.75rem;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 0;
+            transition: color 0.2s;
+        }
+
+        .small-btn:hover {
+            color: var(--red);
+        }
+
+        .separator {
+            margin: 0 6px;
+            color: var(--border-color);
+        }
+
+        @media (max-width: 768px) {
+            .cv-container {
+                padding: 20px;
+            }
+            h1 {
+                font-size: 2.8rem;
+            }
+        }
+
+        @media print {
+            body {
+                background-color: #ffffff;
+                color: #111111;
+                padding: 0;
+            }
+            .cv-container {
+                border: none;
+                box-shadow: none;
+                background-color: #ffffff;
+                padding: 0;
+                max-width: 100%;
+            }
+            .footer-actions {
+                display: none;
+            }
+            p, ul li, .short-card p {
+                color: #333333 !important;
+            }
+            .job-title {
+                color: #000000 !important;
+            }
+            .contact-grid, .short-card, .skill-tag {
+                background-color: #f7f7f7 !important;
+                border-color: #dddddd !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="cv-container">
+        <header>
+            <div>
+                <h1>Logan Ahern</h1>
+                <div class="subtitle">Sales · Retail · Front of House</div>
+            </div>
+            <div class="contact-grid">
+                <div><span>AVAILABILITY:</span> Available Now</div>
+                <div><span>PHONE:</span> 07464 457631</div>
+                <div><span>EMAIL:</span> loganrahern@icloud.com</div>
+                <div><span>LOCATION:</span> Northamptonshire — Happy to travel</div>
+            </div>
+        </header>
+
+        <section>
+            <h2>The Profile</h2>
+            <p>Music Production student who is genuinely happiest talking to people about records, gear and the stories behind them. A year of customer-facing and stockroom work — bar service, bookings, payments, deliveries and inventory — means I already know how a busy floor runs and how to keep a queue moving without losing the conversation. Reliable, organised and endlessly curious: I like learning a product inside out, then passing that enthusiasm on to whoever walks through the door.</p>
+        </section>
+
+        <section>
+            <h2>Core Skills</h2>
+            <div class="skills-grid">
+                <div class="skill-tag">Customer Service & Client Relations</div>
+                <div class="skill-tag">Card & Cash Handling</div>
+                <div class="skill-tag">Stock Control & Inventory Accuracy</div>
+                <div class="skill-tag">Bookings & Scheduling</div>
+                <div class="skill-tag">Order Processing & Logistics</div>
+                <div class="skill-tag">Teamwork, Time Management & Adaptability</div>
+                <div class="skill-tag">Problem Solving Under Pressure</div>
+            </div>
+        </section>
+
+        <section>
+            <h2>Experience</h2>
+            
+            <div class="job-item">
+                <div class="job-title">Deliveries & Logistics Assistant</div>
+                <div class="job-company">Astraseal — Wellingborough | Nov 2025 – Present</div>
+                <ul>
+                    <li>Book in and check incoming deliveries, keeping stock records accurate for each item.</li>
+                    <li>Run day-to-day logistics: processing orders, maintaining records and getting the right goods out on time.</li>
+                    <li>Deal directly with clients on collections and queries — clear, friendly, no fuss.</li>
+                    <li>Work to tight deadlines in a fast-moving team, spotting errors before they reach the customer.</li>
+                </ul>
+            </div>
+
+            <div class="job-item">
+                <div class="job-title">Front of House & Bar Assistant</div>
+                <div class="job-company">Chester House — Irchester | Aug 2025 – Nov 2025</div>
+                <ul>
+                    <li>Served at the bar and on the floor, taking payments and handling bookings for guests.</li>
+                    <li>Covered long wedding weekends — kept large parties catered for and service calm under pressure.</li>
+                    <li>Supported staff scheduling and kept stock, restocking and the bar organised through peak trade.</li>
+                    <li>Learned to read a room fast, recommend confidently and turn first-time guests into regulars.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section>
+            <h2>Education</h2>
+            <div class="edu-item">
+                <div class="job-title">Northampton College</div>
+                <div class="job-company">Music Production (2024 – 2026)</div>
+                <p>GCSEs — Including English & Maths</p>
+            </div>
+        </section>
+
+        <section>
+            <h2>In The Studio & Interests</h2>
+            <ul>
+                <li><strong>Sound & Production:</strong> Logic Pro (recording, mixing, arranging), software synths, sound design, microphones & signal chain, sequencing, programming, arpeggiation.</li>
+                <li><strong>Gear & Instruments:</strong> Self-taught classical piano from scratch; own and program a Roland SH analogue synth over MIDI. Fascinated by how synths work under the hood.</li>
+                <li><strong>Off The Clock:</strong> Mountain biking & running, digging for new music, iPhoneography & visual design, always learning something new.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>The Short Version</h2>
+            <div class="short-version-grid">
+                <div class="short-card">
+                    <h3>People First</h3>
+                    <p>Bar, floor and front desk — I like the part of the job where you actually talk to someone.</p>
+                </div>
+                <div class="short-card">
+                    <h3>Safe Pair of Hands</h3>
+                    <p>Payments, bookings, stock counts and deliveries all handled without anything slipping.</p>
+                </div>
+                <div class="short-card">
+                    <h3>Product Obsessive</h3>
+                    <p>If it makes a sound, I want to know how it works — and then tell you about it.</p>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <div>References Available On Request</div>
+            <div><span>Logan Ahern</span> — CV 2026</div>
+        </footer>
+        <div class="footer-actions">
+            <button class="small-btn" onclick="window.print()">Print</button>
+            <span class="separator">/</span>
+            <button class="small-btn" onclick="generatePDF()">Save PDF</button>
+        </div>
+    </div>
+
+    <script>
+        function generatePDF() {
+            const element = document.querySelector('.cv-container');
+            const opt = {
+                margin: 10,
+                filename: 'Logan_Ahern_CV.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            };
+            html2pdf().set(opt).from(element).save();
+        }
+    </script>
+
+</body>
+</html>
