@@ -72,24 +72,47 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
             position: relative;
             z-index: 1;
+            transition: background-color 0.3s, color 0.3s;
         }
 
-        /* PDF Mode: Rigid Reset for Rendering */
-        .pdf-mode, .pdf-mode * {
+        /* PDF Mode: Clean Light Theme Overrides without breaking layout */
+        .cv-container.pdf-mode {
             background-color: #ffffff !important;
-            color: #000000 !important;
-            border-color: #cccccc !important;
+            color: #222222 !important;
+            border: none !important;
             box-shadow: none !important;
-            filter: none !important;
-            animation: none !important;
-            text-shadow: none !important;
-            position: static !important; /* Forces document flow */
-            transform: none !important;
+            padding: 30px !important;
         }
+        .cv-container.pdf-mode .glowing { animation: none !important; text-shadow: none !important; color: var(--red) !important; }
+        .cv-container.pdf-mode p, 
+        .cv-container.pdf-mode ul li, 
+        .cv-container.pdf-mode .short-card p, 
+        .cv-container.pdf-mode footer div,
+        .cv-container.pdf-mode .subtitle { color: #333333 !important; }
+        
+        .cv-container.pdf-mode h1, 
+        .cv-container.pdf-mode h2, 
+        .cv-container.pdf-mode .job-title, 
+        .cv-container.pdf-mode .short-card h3 { color: #111111 !important; }
+        
+        .cv-container.pdf-mode .job-company, 
+        .cv-container.pdf-mode .contact-grid span, 
+        .cv-container.pdf-mode footer span { color: var(--red) !important; }
+        
+        .cv-container.pdf-mode .contact-grid, 
+        .cv-container.pdf-mode .short-card, 
+        .cv-container.pdf-mode .skill-tag { 
+            background-color: #f7f7f7 !important; 
+            border-color: #dddddd !important; 
+            color: #333333 !important;
+        }
+        
+        .cv-container.pdf-mode a { color: var(--red) !important; text-decoration: underline; }
         .pdf-mode-background { display: none !important; }
 
         /* Links */
         a { text-decoration: none; color: inherit; }
+        .contact-grid a:hover { text-decoration: underline; }
 
         header { border-bottom: 3px solid var(--red); padding-bottom: 30px; margin-bottom: 40px; }
         h1 { font-family: 'Anton', sans-serif; font-size: 3.5rem; color: var(--red); letter-spacing: 2px; text-transform: uppercase; line-height: 1; margin-bottom: 10px; }
@@ -239,26 +262,23 @@
             const element = document.getElementById('cv-content');
             const bgLayers = document.querySelectorAll('.background-blur');
             
-            // Add PDF classes
             element.classList.add('pdf-mode');
             bgLayers.forEach(layer => layer.classList.add('pdf-mode-background'));
 
-            // Small delay to allow CSS transitions to finish before snapshot
             setTimeout(() => {
                 const opt = {
                     margin: 10,
                     filename: 'Logan_Ahern_CV.pdf',
                     image: { type: 'jpeg', quality: 0.98 },
-                    html2canvas: { scale: 2, useCORS: true },
+                    html2canvas: { scale: 2, useCORS: true, letterRendering: true },
                     jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
                 };
 
                 html2pdf().set(opt).from(element).save().then(() => {
-                    // Remove PDF classes
                     element.classList.remove('pdf-mode');
                     bgLayers.forEach(layer => layer.classList.remove('pdf-mode-background'));
                 });
-            }, 100); 
+            }, 150);
         }
     </script>
 </body>
