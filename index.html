@@ -8,6 +8,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+    <!-- ============ SCREEN STYLES (unchanged design) ============ -->
     <style>
         :root {
             --bg-color: #0b0b0b;
@@ -19,19 +21,16 @@
             --border-color: #222222;
         }
 
-        /* Animations */
         @keyframes slow-glow {
             0% { text-shadow: 0 0 0px rgba(184, 20, 20, 0); }
             50% { text-shadow: 0 0 10px rgba(184, 20, 20, 0.6); }
             100% { text-shadow: 0 0 0px rgba(184, 20, 20, 0); }
         }
-
         @keyframes blur-pulse {
             0%, 15% { filter: blur(20px); }
             25%, 75% { filter: blur(5px); }
             85%, 100% { filter: blur(20px); }
         }
-
         @keyframes fade-ferrari { 0%, 45% { opacity: 0.3; } 50%, 95% { opacity: 0; } }
         @keyframes fade-roland { 0%, 45% { opacity: 0; } 50%, 95% { opacity: 0.3; } }
 
@@ -49,7 +48,6 @@
             min-height: 100vh;
         }
 
-        /* Background Layers */
         .background-blur {
             position: fixed;
             top: -20px; left: -20px;
@@ -59,7 +57,7 @@
             animation: blur-pulse 20s infinite ease-in-out;
         }
         #bg-ferrari { background-image: url('ferrari.webp'); animation: blur-pulse 20s infinite ease-in-out, fade-ferrari 60s infinite linear; }
-        #bg-roland { background-image: url('roland.webp'); animation: blur-pulse 20s infinite ease-in-out, fade-roland 60s infinite linear; }
+        #bg-roland  { background-image: url('roland.webp');  animation: blur-pulse 20s infinite ease-in-out, fade-roland 60s infinite linear; }
 
         body::after { content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); z-index: -1; }
 
@@ -72,47 +70,9 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
             position: relative;
             z-index: 1;
-            transition: background-color 0.3s, color 0.3s;
         }
 
-        /* PDF Mode: Clean Light Theme Overrides without breaking layout */
-        .cv-container.pdf-mode {
-            background-color: #ffffff !important;
-            color: #222222 !important;
-            border: none !important;
-            box-shadow: none !important;
-            padding: 30px !important;
-        }
-        .cv-container.pdf-mode .glowing { animation: none !important; text-shadow: none !important; color: var(--red) !important; }
-        .cv-container.pdf-mode p, 
-        .cv-container.pdf-mode ul li, 
-        .cv-container.pdf-mode .short-card p, 
-        .cv-container.pdf-mode footer div,
-        .cv-container.pdf-mode .subtitle { color: #333333 !important; }
-        
-        .cv-container.pdf-mode h1, 
-        .cv-container.pdf-mode h2, 
-        .cv-container.pdf-mode .job-title, 
-        .cv-container.pdf-mode .short-card h3 { color: #111111 !important; }
-        
-        .cv-container.pdf-mode .job-company, 
-        .cv-container.pdf-mode .contact-grid span, 
-        .cv-container.pdf-mode footer span { color: var(--red) !important; }
-        
-        .cv-container.pdf-mode .contact-grid, 
-        .cv-container.pdf-mode .short-card, 
-        .cv-container.pdf-mode .skill-tag { 
-            background-color: #f7f7f7 !important; 
-            border-color: #dddddd !important; 
-            color: #333333 !important;
-        }
-        
-        .cv-container.pdf-mode a { color: var(--red) !important; text-decoration: underline; }
-        .pdf-mode-background { display: none !important; }
-
-        /* Links */
         a { text-decoration: none; color: inherit; }
-        .contact-grid a:hover { text-decoration: underline; }
 
         header { border-bottom: 3px solid var(--red); padding-bottom: 30px; margin-bottom: 40px; }
         h1 { font-family: 'Anton', sans-serif; font-size: 3.5rem; color: var(--red); letter-spacing: 2px; text-transform: uppercase; line-height: 1; margin-bottom: 10px; }
@@ -141,7 +101,103 @@
         .small-btn { background: none; border: none; color: var(--text-muted); font-family: 'Space Grotesk', sans-serif; font-size: 0.75rem; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; padding: 0; }
         .small-btn:hover { color: var(--red); }
         .separator { margin: 0 6px; color: var(--border-color); }
-        @media print { .footer-actions { display: none; } }
+    </style>
+
+    <!-- ============================================================
+         MONOCHROME SHEET
+         media="print" so it applies automatically on Ctrl+P.
+         generatePDF() flips media to "all" so the PDF uses the
+         exact same rules, then flips it back. One source of truth.
+         ============================================================ -->
+    <style id="mono-sheet" media="print">
+        @page { size: A4; margin: 14mm 13mm; }
+
+        html, body {
+            background: #fff !important;
+            color: #000;
+            padding: 0;
+            margin: 0;
+            min-height: 0;
+            font-size: 10.5pt;
+            line-height: 1.42;
+        }
+
+        /* kill decoration that only works on a dark screen */
+        .background-blur,
+        .footer-actions { display: none !important; }
+        body::after { display: none !important; content: none !important; }
+        .glowing { animation: none !important; text-shadow: none !important; }
+
+        .cv-container {
+            max-width: 100%;
+            background: #fff;
+            border: none;
+            box-shadow: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        /* ---- header ---- */
+        header { border-bottom: 2.5pt solid #000; padding-bottom: 10pt; margin-bottom: 16pt; }
+        h1 { color: #000; font-size: 30pt; letter-spacing: 1px; margin-bottom: 4pt; }
+        .subtitle { color: #333; font-size: 8.5pt; letter-spacing: 2px; }
+
+        .contact-grid {
+            background: transparent;
+            border-left: 2.5pt solid #000;
+            padding: 6pt 0 6pt 8pt;
+            margin-top: 10pt;
+            gap: 3pt 16pt;
+            font-size: 9pt;
+        }
+        .contact-grid div { color: #000; }
+        .contact-grid span { color: #000; font-weight: 700; }
+
+        /* ---- sections ---- */
+        section { margin-bottom: 14pt; }
+        h2 {
+            color: #000; font-size: 14pt; margin-bottom: 7pt;
+            border-bottom: 1pt solid #000; padding-bottom: 2pt;
+        }
+        p { color: #000; font-size: 10pt; margin-bottom: 7pt; }
+
+        /* ---- skills: outline chips, no fill ---- */
+        .skills-grid { gap: 5pt; }
+        .skill-tag {
+            background: transparent; color: #000;
+            border: 0.6pt solid #777; border-left: 2.5pt solid #000;
+            padding: 3pt 7pt; font-size: 8.8pt;
+        }
+
+        /* ---- jobs ---- */
+        .job-item, .edu-item { margin-bottom: 11pt; }
+        .job-title { color: #000; font-size: 11pt; }
+        .job-company { color: #000; font-size: 9pt; margin-bottom: 4pt; }
+
+        /* bullets: li keeps position:relative so ::before stays put */
+        ul li { position: relative; color: #000; font-size: 9.8pt; padding-left: 12pt; margin-bottom: 3pt; }
+        ul li::before { content: "\25A0"; position: absolute; left: 0; top: 1.5pt; color: #000; font-size: 6pt; }
+
+        /* ---- short version cards ---- */
+        .short-version-grid { gap: 9pt; }
+        .short-card {
+            background: transparent;
+            border: 0.6pt solid #777; border-top: 2.5pt solid #000;
+            padding: 8pt 9pt;
+        }
+        .short-card h3 { color: #000; font-size: 11pt; margin-bottom: 3pt; }
+        .short-card p { color: #222; font-size: 8.8pt; }
+
+        /* ---- footer ---- */
+        footer { margin-top: 14pt; padding-top: 7pt; border-top: 1pt solid #000; color: #000; font-size: 8pt; }
+        footer span { color: #000; }
+
+        a { color: #000; text-decoration: none; }
+
+        /* ---- don't split things across pages ---- */
+        header, .job-item, .edu-item, .short-card, .contact-grid { break-inside: avoid; page-break-inside: avoid; }
+        h2 { break-after: avoid; page-break-after: avoid; }
+        ul li { break-inside: avoid; page-break-inside: avoid; }
     </style>
 </head>
 <body>
@@ -159,7 +215,7 @@
                 <div><span>AVAILABILITY:</span> Northampton / Manchester (Sept 2026)</div>
                 <div><span class="glowing">PHONE:</span> <a href="tel:07464457631">07464 457631</a></div>
                 <div><span class="glowing">EMAIL:</span> <a href="mailto:loganrahern@icloud.com">loganrahern@icloud.com</a></div>
-                <div><span>LOCATION:</span> Northamptonshire & Greater Manchester</div>
+                <div><span>LOCATION:</span> Northamptonshire &amp; Greater Manchester</div>
             </div>
         </header>
 
@@ -171,12 +227,12 @@
         <section>
             <h2>Core Skills</h2>
             <div class="skills-grid">
-                <div class="skill-tag">Customer Service & Client Relations</div>
-                <div class="skill-tag">Card & Cash Handling</div>
-                <div class="skill-tag">Stock Control & Inventory Accuracy</div>
-                <div class="skill-tag">Bookings & Scheduling</div>
-                <div class="skill-tag">Order Processing & Logistics</div>
-                <div class="skill-tag">Teamwork, Time Management & Adaptability</div>
+                <div class="skill-tag">Customer Service &amp; Client Relations</div>
+                <div class="skill-tag">Card &amp; Cash Handling</div>
+                <div class="skill-tag">Stock Control &amp; Inventory Accuracy</div>
+                <div class="skill-tag">Bookings &amp; Scheduling</div>
+                <div class="skill-tag">Order Processing &amp; Logistics</div>
+                <div class="skill-tag">Teamwork, Time Management &amp; Adaptability</div>
                 <div class="skill-tag">Problem Solving Under Pressure</div>
             </div>
         </section>
@@ -184,7 +240,7 @@
         <section>
             <h2 class="glowing">Experience</h2>
             <div class="job-item">
-                <div class="job-title">Deliveries & Logistics Assistant</div>
+                <div class="job-title">Deliveries &amp; Logistics Assistant</div>
                 <div class="job-company glowing">Astraseal — Wellingborough | Nov 2025 – Present</div>
                 <ul>
                     <li>Book in and check incoming deliveries, keeping stock records accurate for each item.</li>
@@ -194,7 +250,7 @@
                 </ul>
             </div>
             <div class="job-item">
-                <div class="job-title">Front of House & Bar Assistant</div>
+                <div class="job-title">Front of House &amp; Bar Assistant</div>
                 <div class="job-company glowing">Chester House — Irchester | Aug 2025 – Nov 2025</div>
                 <ul>
                     <li>Served at the bar and on the floor, taking payments and handling bookings for guests.</li>
@@ -209,22 +265,22 @@
             <h2>Education</h2>
             <div class="edu-item">
                 <div class="job-title">Manchester Metropolitan University (SODA)</div>
-                <div class="job-company glowing">Music Production & Sound Design (Starting Sept 2026)</div>
+                <div class="job-company glowing">Music Production &amp; Sound Design (Starting Sept 2026)</div>
                 <p>Available for part-time work in the surrounding Manchester area.</p>
             </div>
             <div class="edu-item">
                 <div class="job-title">Northampton College</div>
                 <div class="job-company glowing">Music Production (2024 – 2026)</div>
-                <p>GCSEs — Including English & Maths</p>
+                <p>GCSEs — Including English &amp; Maths</p>
             </div>
         </section>
 
         <section>
-            <h2>In The Studio & Interests</h2>
+            <h2>In The Studio &amp; Interests</h2>
             <ul>
-                <li><strong>Sound & Production:</strong> Logic Pro (recording, mixing, arranging), software synths, sound design, microphones & signal chain, sequencing, programming, arpeggiation.</li>
-                <li><strong>Gear & Instruments:</strong> Self-taught classical piano from scratch; own and program a Roland SH analogue synth over MIDI. Fascinated by how synths work under the hood.</li>
-                <li><strong>Off The Clock:</strong> Mountain biking & running, digging for new music, iPhoneography & visual design, always learning something new.</li>
+                <li><strong>Sound &amp; Production:</strong> Logic Pro (recording, mixing, arranging), software synths, sound design, microphones &amp; signal chain, sequencing, programming, arpeggiation.</li>
+                <li><strong>Gear &amp; Instruments:</strong> Self-taught classical piano from scratch; own and program a Roland SH analogue synth over MIDI. Fascinated by how synths work under the hood.</li>
+                <li><strong>Off The Clock:</strong> Mountain biking &amp; running, digging for new music, iPhoneography &amp; visual design, always learning something new.</li>
             </ul>
         </section>
 
@@ -250,6 +306,7 @@
             <div>References Available On Request</div>
             <div><span class="glowing">Logan Ahern</span> — CV 2026</div>
         </footer>
+
         <div class="footer-actions">
             <button class="small-btn" onclick="window.print()">Print</button>
             <span class="separator">/</span>
@@ -259,26 +316,38 @@
 
     <script>
         function generatePDF() {
-            const element = document.getElementById('cv-content');
-            const bgLayers = document.querySelectorAll('.background-blur');
-            
-            element.classList.add('pdf-mode');
-            bgLayers.forEach(layer => layer.classList.add('pdf-mode-background'));
+            const element   = document.getElementById('cv-content');
+            const monoSheet = document.getElementById('mono-sheet');
+            const btn       = event && event.target;
 
-            setTimeout(() => {
-                const opt = {
-                    margin: 10,
-                    filename: 'Logan_Ahern_CV.pdf',
-                    image: { type: 'jpeg', quality: 0.98 },
-                    html2canvas: { scale: 2, useCORS: true, letterRendering: true },
-                    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-                };
+            if (btn) { btn.disabled = true; btn.textContent = 'Building…'; }
 
-                html2pdf().set(opt).from(element).save().then(() => {
-                    element.classList.remove('pdf-mode');
-                    bgLayers.forEach(layer => layer.classList.remove('pdf-mode-background'));
-                });
-            }, 150);
+            // Apply the print stylesheet to the live page so html2canvas
+            // photographs the black-and-white version.
+            monoSheet.media = 'all';
+
+            const opt = {
+                margin:      [12, 12, 12, 12],
+                filename:    'Logan_Ahern_CV.pdf',
+                image:       { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2, useCORS: true, backgroundColor: '#ffffff' },
+                jsPDF:       { unit: 'mm', format: 'a4', orientation: 'portrait' },
+                pagebreak:   { mode: ['css', 'legacy'], avoid: ['.job-item', '.edu-item', '.short-card', 'header'] }
+            };
+
+            const restore = () => {
+                monoSheet.media = 'print';
+                if (btn) { btn.disabled = false; btn.textContent = 'Save PDF'; }
+            };
+
+            // Wait a frame so the browser applies the new styles before capture.
+            requestAnimationFrame(() => {
+                setTimeout(() => {
+                    html2pdf().set(opt).from(element).save()
+                        .then(restore)
+                        .catch(err => { console.error(err); restore(); });
+                }, 120);
+            });
         }
     </script>
 </body>
