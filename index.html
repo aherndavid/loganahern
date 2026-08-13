@@ -19,6 +19,17 @@
             --border-color: #222222;
         }
 
+        /* Slow Pulse Animation */
+        @keyframes slow-glow {
+            0% { text-shadow: 0 0 0px rgba(184, 20, 20, 0); }
+            50% { text-shadow: 0 0 10px rgba(184, 20, 20, 0.6); }
+            100% { text-shadow: 0 0 0px rgba(184, 20, 20, 0); }
+        }
+
+        .glowing {
+            animation: slow-glow 5s infinite ease-in-out;
+        }
+
         * {
             box-sizing: border-box;
             margin: 0;
@@ -40,7 +51,42 @@
             border: 2px solid var(--border-color);
             padding: 50px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+            transition: all 0.3s ease;
         }
+
+        /* PDF Mode Override Styles */
+        .cv-container.pdf-mode {
+            background-color: #ffffff !important;
+            color: #000000 !important;
+            border: 1px solid #cccccc !important;
+            box-shadow: none !important;
+        }
+
+        .pdf-mode .glowing {
+            animation: none !important;
+            text-shadow: none !important;
+        }
+
+        .pdf-mode p, .pdf-mode ul li, .pdf-mode .short-card p, .pdf-mode footer div {
+            color: #333333 !important;
+        }
+
+        .pdf-mode h1, .pdf-mode h2, .pdf-mode .job-title {
+            color: #000000 !important;
+        }
+
+        .pdf-mode .job-company, .pdf-mode .contact-grid span, .pdf-mode footer span {
+            color: var(--red) !important;
+        }
+
+        .pdf-mode .contact-grid, .pdf-mode .short-card, .pdf-mode .skill-tag {
+            background-color: #f7f7f7 !important;
+            border-color: #dddddd !important;
+        }
+
+        /* Links */
+        a { text-decoration: none; color: inherit; }
+        .contact-grid a:hover { text-decoration: underline; }
 
         header {
             border-bottom: 3px solid var(--red);
@@ -77,18 +123,10 @@
             margin-top: 20px;
         }
 
-        .contact-grid div {
-            color: var(--text-main);
-        }
+        .contact-grid div { color: var(--text-main); }
+        .contact-grid span { color: var(--red); font-weight: 700; margin-right: 5px; }
 
-        .contact-grid span {
-            color: var(--red);
-            font-weight: 700;
-        }
-
-        section {
-            margin-bottom: 35px;
-        }
+        section { margin-bottom: 35px; }
 
         h2 {
             font-family: 'Anton', sans-serif;
@@ -101,18 +139,9 @@
             padding-bottom: 5px;
         }
 
-        p {
-            margin-bottom: 15px;
-            font-size: 1rem;
-            color: #cccccc;
-        }
+        p { margin-bottom: 15px; font-size: 1rem; color: #cccccc; }
 
-        /* Skills Tags */
-        .skills-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
+        .skills-grid { display: flex; flex-wrap: wrap; gap: 10px; }
 
         .skill-tag {
             background-color: #1a1a1a;
@@ -121,21 +150,12 @@
             padding: 8px 14px;
             font-size: 0.9rem;
             font-weight: 500;
-            border-radius: 0;
             border-left: 3px solid var(--red);
         }
 
-        /* Experience & Education */
-        .job-item, .edu-item {
-            margin-bottom: 25px;
-        }
+        .job-item, .edu-item { margin-bottom: 25px; }
 
-        .job-title {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: #ffffff;
-            text-transform: uppercase;
-        }
+        .job-title { font-size: 1.2rem; font-weight: 700; color: #ffffff; text-transform: uppercase; }
 
         .job-company {
             font-size: 0.95rem;
@@ -146,33 +166,11 @@
             letter-spacing: 0.5px;
         }
 
-        ul {
-            list-style-type: none;
-            padding-left: 0;
-        }
+        ul { list-style-type: none; padding-left: 0; }
+        ul li { position: relative; padding-left: 20px; margin-bottom: 8px; font-size: 0.95rem; color: #cccccc; }
+        ul li::before { content: "■"; position: absolute; left: 0; color: var(--red); font-size: 0.7rem; top: 2px; }
 
-        ul li {
-            position: relative;
-            padding-left: 20px;
-            margin-bottom: 8px;
-            font-size: 0.95rem;
-            color: #cccccc;
-        }
-
-        ul li::before {
-            content: "■";
-            position: absolute;
-            left: 0;
-            color: var(--red);
-            font-size: 0.7rem;
-            top: 2px;
-        }
-
-        .short-version-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 20px;
-        }
+        .short-version-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
 
         .short-card {
             background-color: #0d0d0d;
@@ -181,19 +179,8 @@
             border-top: 3px solid var(--red);
         }
 
-        .short-card h3 {
-            font-family: 'Anton', sans-serif;
-            font-size: 1.2rem;
-            color: #ffffff;
-            margin-bottom: 8px;
-            letter-spacing: 0.5px;
-        }
-
-        .short-card p {
-            font-size: 0.9rem;
-            margin-bottom: 0;
-            color: var(--text-muted);
-        }
+        .short-card h3 { font-family: 'Anton', sans-serif; font-size: 1.2rem; color: #ffffff; margin-bottom: 8px; letter-spacing: 0.5px; }
+        .short-card p { font-size: 0.9rem; margin-bottom: 0; color: var(--text-muted); }
 
         footer {
             margin-top: 40px;
@@ -208,91 +195,33 @@
             letter-spacing: 1px;
         }
 
-        footer span {
-            color: var(--red);
-            font-weight: 700;
-        }
+        footer span { color: var(--red); font-weight: 700; }
 
-        .footer-actions {
-            margin-top: 15px;
-            text-align: right;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
+        .footer-actions { margin-top: 15px; text-align: right; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; }
 
         .small-btn {
-            background: none;
-            border: none;
-            color: var(--text-muted);
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 0.75rem;
-            cursor: pointer;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            padding: 0;
-            transition: color 0.2s;
+            background: none; border: none; color: var(--text-muted); font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.75rem; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; padding: 0;
         }
 
-        .small-btn:hover {
-            color: var(--red);
-        }
+        .small-btn:hover { color: var(--red); }
+        .separator { margin: 0 6px; color: var(--border-color); }
 
-        .separator {
-            margin: 0 6px;
-            color: var(--border-color);
-        }
-
-        @media (max-width: 768px) {
-            .cv-container {
-                padding: 20px;
-            }
-            h1 {
-                font-size: 2.8rem;
-            }
-        }
-
-        @media print {
-            body {
-                background-color: #ffffff;
-                color: #111111;
-                padding: 0;
-            }
-            .cv-container {
-                border: none;
-                box-shadow: none;
-                background-color: #ffffff;
-                padding: 0;
-                max-width: 100%;
-            }
-            .footer-actions {
-                display: none;
-            }
-            p, ul li, .short-card p {
-                color: #333333 !important;
-            }
-            .job-title {
-                color: #000000 !important;
-            }
-            .contact-grid, .short-card, .skill-tag {
-                background-color: #f7f7f7 !important;
-                border-color: #dddddd !important;
-            }
-        }
+        @media print { .footer-actions { display: none; } }
     </style>
 </head>
 <body>
 
-    <div class="cv-container">
+    <div class="cv-container" id="cv-content">
         <header>
             <div>
-                <h1>Logan Ahern</h1>
+                <h1 class="glowing">Logan Ahern</h1>
                 <div class="subtitle">Sales · Retail · Front of House</div>
             </div>
             <div class="contact-grid">
                 <div><span>AVAILABILITY:</span> Available Now</div>
-                <div><span>PHONE:</span> 07464 457631</div>
-                <div><span>EMAIL:</span> loganrahern@icloud.com</div>
+                <div><span class="glowing">PHONE:</span> <a href="tel:07464457631">07464 457631</a></div>
+                <div><span class="glowing">EMAIL:</span> <a href="mailto:loganrahern@icloud.com">loganrahern@icloud.com</a></div>
                 <div><span>LOCATION:</span> Northamptonshire — Happy to travel</div>
             </div>
         </header>
@@ -316,11 +245,10 @@
         </section>
 
         <section>
-            <h2>Experience</h2>
-            
+            <h2 class="glowing">Experience</h2>
             <div class="job-item">
                 <div class="job-title">Deliveries & Logistics Assistant</div>
-                <div class="job-company">Astraseal — Wellingborough | Nov 2025 – Present</div>
+                <div class="job-company glowing">Astraseal — Wellingborough | Nov 2025 – Present</div>
                 <ul>
                     <li>Book in and check incoming deliveries, keeping stock records accurate for each item.</li>
                     <li>Run day-to-day logistics: processing orders, maintaining records and getting the right goods out on time.</li>
@@ -328,10 +256,9 @@
                     <li>Work to tight deadlines in a fast-moving team, spotting errors before they reach the customer.</li>
                 </ul>
             </div>
-
             <div class="job-item">
                 <div class="job-title">Front of House & Bar Assistant</div>
-                <div class="job-company">Chester House — Irchester | Aug 2025 – Nov 2025</div>
+                <div class="job-company glowing">Chester House — Irchester | Aug 2025 – Nov 2025</div>
                 <ul>
                     <li>Served at the bar and on the floor, taking payments and handling bookings for guests.</li>
                     <li>Covered long wedding weekends — kept large parties catered for and service calm under pressure.</li>
@@ -345,7 +272,7 @@
             <h2>Education</h2>
             <div class="edu-item">
                 <div class="job-title">Northampton College</div>
-                <div class="job-company">Music Production (2024 – 2026)</div>
+                <div class="job-company glowing">Music Production (2024 – 2026)</div>
                 <p>GCSEs — Including English & Maths</p>
             </div>
         </section>
@@ -360,7 +287,7 @@
         </section>
 
         <section>
-            <h2>The Short Version</h2>
+            <h2 class="glowing">The Short Version</h2>
             <div class="short-version-grid">
                 <div class="short-card">
                     <h3>People First</h3>
@@ -379,7 +306,7 @@
 
         <footer>
             <div>References Available On Request</div>
-            <div><span>Logan Ahern</span> — CV 2026</div>
+            <div><span class="glowing">Logan Ahern</span> — CV 2026</div>
         </footer>
         <div class="footer-actions">
             <button class="small-btn" onclick="window.print()">Print</button>
@@ -390,7 +317,8 @@
 
     <script>
         function generatePDF() {
-            const element = document.querySelector('.cv-container');
+            const element = document.getElementById('cv-content');
+            element.classList.add('pdf-mode');
             const opt = {
                 margin: 10,
                 filename: 'Logan_Ahern_CV.pdf',
@@ -398,9 +326,10 @@
                 html2canvas: { scale: 2 },
                 jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
             };
-            html2pdf().set(opt).from(element).save();
+            html2pdf().set(opt).from(element).save().then(() => {
+                element.classList.remove('pdf-mode');
+            });
         }
     </script>
-
 </body>
 </html>
