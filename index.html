@@ -26,11 +26,20 @@
             100% { text-shadow: 0 0 0px rgba(184, 20, 20, 0); }
         }
 
-        /* 20 second loop: 10s of "sharp-ish", 10s of transition/blurred */
         @keyframes blur-pulse {
             0%, 15% { filter: blur(20px); }
             25%, 75% { filter: blur(5px); }
             85%, 100% { filter: blur(20px); }
+        }
+
+        /* Rotation Fades (60s total loop) */
+        @keyframes fade-ferrari {
+            0%, 45% { opacity: 0.3; }
+            50%, 95% { opacity: 0; }
+        }
+        @keyframes fade-roland {
+            0%, 45% { opacity: 0; }
+            50%, 95% { opacity: 0.3; }
         }
 
         .glowing { animation: slow-glow 5s infinite ease-in-out; }
@@ -47,19 +56,27 @@
             min-height: 100vh;
         }
 
-        /* Background Image Layer */
+        /* Background Image Layers */
         .background-blur {
             position: fixed;
             top: -20px;
             left: -20px;
             width: calc(100% + 40px);
             height: calc(100% + 40px);
-            background-image: url('ferrari.webp');
             background-size: cover;
             background-position: center;
             z-index: -1;
-            opacity: 0.3;
             animation: blur-pulse 20s infinite ease-in-out;
+        }
+
+        #bg-ferrari {
+            background-image: url('ferrari.webp');
+            animation: blur-pulse 20s infinite ease-in-out, fade-ferrari 60s infinite linear;
+        }
+
+        #bg-roland {
+            background-image: url('roland.webp');
+            animation: blur-pulse 20s infinite ease-in-out, fade-roland 60s infinite linear;
         }
 
         /* Dark overlay for readability */
@@ -135,7 +152,8 @@
 </head>
 <body>
 
-    <div class="background-blur" id="bg-layer"></div>
+    <div class="background-blur" id="bg-ferrari"></div>
+    <div class="background-blur" id="bg-roland"></div>
 
     <div class="cv-container" id="cv-content">
         <header>
@@ -243,10 +261,10 @@
     <script>
         function generatePDF() {
             const element = document.getElementById('cv-content');
-            const bgLayer = document.getElementById('bg-layer');
+            const bgLayers = document.querySelectorAll('.background-blur');
             
             element.classList.add('pdf-mode');
-            bgLayer.classList.add('pdf-mode-background');
+            bgLayers.forEach(layer => layer.classList.add('pdf-mode-background'));
 
             const opt = {
                 margin: 10,
@@ -258,7 +276,7 @@
 
             html2pdf().set(opt).from(element).save().then(() => {
                 element.classList.remove('pdf-mode');
-                bgLayer.classList.remove('pdf-mode-background');
+                bgLayers.forEach(layer => layer.classList.remove('pdf-mode-background'));
             });
         }
     </script>
