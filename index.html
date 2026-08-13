@@ -19,11 +19,18 @@
             --border-color: #222222;
         }
 
-        /* Slow Pulse Animation */
+        /* Animations */
         @keyframes slow-glow {
             0% { text-shadow: 0 0 0px rgba(184, 20, 20, 0); }
             50% { text-shadow: 0 0 10px rgba(184, 20, 20, 0.6); }
             100% { text-shadow: 0 0 0px rgba(184, 20, 20, 0); }
+        }
+
+        /* 20 second loop: 10s of "sharp-ish", 10s of transition/blurred */
+        @keyframes blur-pulse {
+            0%, 15% { filter: blur(20px); }
+            25%, 75% { filter: blur(5px); }
+            85%, 100% { filter: blur(20px); }
         }
 
         .glowing { animation: slow-glow 5s infinite ease-in-out; }
@@ -50,9 +57,9 @@
             background-image: url('ferrari.webp');
             background-size: cover;
             background-position: center;
-            filter: blur(20px);
             z-index: -1;
             opacity: 0.3;
+            animation: blur-pulse 20s infinite ease-in-out;
         }
 
         /* Dark overlay for readability */
@@ -90,7 +97,6 @@
         .pdf-mode .job-company, .pdf-mode .contact-grid span, .pdf-mode footer span { color: var(--red) !important; }
         .pdf-mode .contact-grid, .pdf-mode .short-card, .pdf-mode .skill-tag { background-color: #f7f7f7 !important; border-color: #dddddd !important; }
         
-        /* Hide background in PDF */
         .pdf-mode-background { display: none !important; }
 
         /* Links */
@@ -239,7 +245,6 @@
             const element = document.getElementById('cv-content');
             const bgLayer = document.getElementById('bg-layer');
             
-            // Apply styles
             element.classList.add('pdf-mode');
             bgLayer.classList.add('pdf-mode-background');
 
