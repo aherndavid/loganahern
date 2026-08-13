@@ -32,15 +32,8 @@
             85%, 100% { filter: blur(20px); }
         }
 
-        /* Rotation Fades (60s total loop) */
-        @keyframes fade-ferrari {
-            0%, 45% { opacity: 0.3; }
-            50%, 95% { opacity: 0; }
-        }
-        @keyframes fade-roland {
-            0%, 45% { opacity: 0; }
-            50%, 95% { opacity: 0.3; }
-        }
+        @keyframes fade-ferrari { 0%, 45% { opacity: 0.3; } 50%, 95% { opacity: 0; } }
+        @keyframes fade-roland { 0%, 45% { opacity: 0; } 50%, 95% { opacity: 0.3; } }
 
         .glowing { animation: slow-glow 5s infinite ease-in-out; }
 
@@ -56,40 +49,19 @@
             min-height: 100vh;
         }
 
-        /* Background Image Layers */
+        /* Background Layers */
         .background-blur {
             position: fixed;
-            top: -20px;
-            left: -20px;
-            width: calc(100% + 40px);
-            height: calc(100% + 40px);
-            background-size: cover;
-            background-position: center;
+            top: -20px; left: -20px;
+            width: calc(100% + 40px); height: calc(100% + 40px);
+            background-size: cover; background-position: center;
             z-index: -1;
             animation: blur-pulse 20s infinite ease-in-out;
         }
+        #bg-ferrari { background-image: url('ferrari.webp'); animation: blur-pulse 20s infinite ease-in-out, fade-ferrari 60s infinite linear; }
+        #bg-roland { background-image: url('roland.webp'); animation: blur-pulse 20s infinite ease-in-out, fade-roland 60s infinite linear; }
 
-        #bg-ferrari {
-            background-image: url('ferrari.webp');
-            animation: blur-pulse 20s infinite ease-in-out, fade-ferrari 60s infinite linear;
-        }
-
-        #bg-roland {
-            background-image: url('roland.webp');
-            animation: blur-pulse 20s infinite ease-in-out, fade-roland 60s infinite linear;
-        }
-
-        /* Dark overlay for readability */
-        body::after {
-            content: "";
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.6);
-            z-index: -1;
-        }
+        body::after { content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.6); z-index: -1; }
 
         .cv-container {
             max-width: 800px;
@@ -98,27 +70,26 @@
             border: 2px solid var(--border-color);
             padding: 50px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
-            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
         }
 
-        /* PDF Mode Override Styles */
-        .cv-container.pdf-mode {
+        /* PDF Mode: Rigid Reset for Rendering */
+        .pdf-mode, .pdf-mode * {
             background-color: #ffffff !important;
             color: #000000 !important;
-            border: 1px solid #cccccc !important;
+            border-color: #cccccc !important;
             box-shadow: none !important;
+            filter: none !important;
+            animation: none !important;
+            text-shadow: none !important;
+            position: static !important; /* Forces document flow */
+            transform: none !important;
         }
-        .pdf-mode .glowing { animation: none !important; text-shadow: none !important; }
-        .pdf-mode p, .pdf-mode ul li, .pdf-mode .short-card p, .pdf-mode footer div { color: #333333 !important; }
-        .pdf-mode h1, .pdf-mode h2, .pdf-mode .job-title { color: #000000 !important; }
-        .pdf-mode .job-company, .pdf-mode .contact-grid span, .pdf-mode footer span { color: var(--red) !important; }
-        .pdf-mode .contact-grid, .pdf-mode .short-card, .pdf-mode .skill-tag { background-color: #f7f7f7 !important; border-color: #dddddd !important; }
-        
         .pdf-mode-background { display: none !important; }
 
         /* Links */
         a { text-decoration: none; color: inherit; }
-        .contact-grid a:hover { text-decoration: underline; }
 
         header { border-bottom: 3px solid var(--red); padding-bottom: 30px; margin-bottom: 40px; }
         h1 { font-family: 'Anton', sans-serif; font-size: 3.5rem; color: var(--red); letter-spacing: 2px; text-transform: uppercase; line-height: 1; margin-bottom: 10px; }
@@ -268,21 +239,26 @@
             const element = document.getElementById('cv-content');
             const bgLayers = document.querySelectorAll('.background-blur');
             
+            // Add PDF classes
             element.classList.add('pdf-mode');
             bgLayers.forEach(layer => layer.classList.add('pdf-mode-background'));
 
-            const opt = {
-                margin: 10,
-                filename: 'Logan_Ahern_CV.pdf',
-                image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { scale: 2 },
-                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-            };
+            // Small delay to allow CSS transitions to finish before snapshot
+            setTimeout(() => {
+                const opt = {
+                    margin: 10,
+                    filename: 'Logan_Ahern_CV.pdf',
+                    image: { type: 'jpeg', quality: 0.98 },
+                    html2canvas: { scale: 2, useCORS: true },
+                    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+                };
 
-            html2pdf().set(opt).from(element).save().then(() => {
-                element.classList.remove('pdf-mode');
-                bgLayers.forEach(layer => layer.classList.remove('pdf-mode-background'));
-            });
+                html2pdf().set(opt).from(element).save().then(() => {
+                    // Remove PDF classes
+                    element.classList.remove('pdf-mode');
+                    bgLayers.forEach(layer => layer.classList.remove('pdf-mode-background'));
+                });
+            }, 100); 
         }
     </script>
 </body>
