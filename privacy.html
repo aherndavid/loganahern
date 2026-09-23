@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-6V0QZLT5W2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-6V0QZLT5W2');
+</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LOGAN | Privacy Policy</title>
@@ -34,6 +43,7 @@
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
         }
     </style>
+    <script src="consent.js" defer></script>
 </head>
 <body class="relative min-h-screen flex flex-col font-sans">
     <div class="noise-overlay"></div>
@@ -62,6 +72,7 @@
                     <li><span class="text-textMain">Booking and enquiry form:</span> your name, email address, and optionally your phone number, social media handle, reference links and project details.</li>
                     <li><span class="text-textMain">Beat purchases:</span> your name, email address and order details. Payment card details are handled by the payment provider and never reach us.</li>
                     <li><span class="text-textMain">Emails and messages</span> you send us directly.</li>
+                    <li><span class="text-textMain">Site usage, if you accept analytics cookies:</span> pages visited, approximate location, device and browser type.</li>
                 </ul>
             </div>
 
@@ -82,6 +93,7 @@
                     <li><span class="text-textMain">Formspree</span> receives booking form submissions and forwards them to us by email. Formspree is based in the United States, and transfers are protected by standard contractual clauses.</li>
                     <li><span class="text-textMain">[Email provider, e.g. Gmail]</span> stores our email correspondence with you.</li>
                     <li><span class="text-textMain">[Payment provider, e.g. Stripe or PayPal]</span> processes beat purchases.</li>
+                    <li><span class="text-textMain">Google Analytics</span> measures how visitors use the site, only if you accept analytics cookies. Google is based in the United States. We've turned off its advertising features.</li>
                     <li><span class="text-textMain">[Hosting provider, e.g. GitHub Pages or Netlify]</span> hosts this website and may keep standard server logs, such as IP addresses, for security.</li>
                 </ul>
             </div>
@@ -106,7 +118,7 @@
 
             <div>
                 <h2 class="text-textMain text-lg tracking-widest uppercase mb-3">7. Cookies</h2>
-                <p>This site doesn't use cookies. See the <a href="cookies.html" class="text-textMain underline decoration-white/30 hover:text-accent hover:decoration-accent">cookie policy</a> for details.</p>
+                <p>If you accept analytics cookies, we use Google Analytics to understand how people use the site. This relies on your consent, and you can withdraw it at any time through <button type="button" onclick="openCookieSettings()" class="text-textMain underline decoration-white/30 hover:text-accent hover:decoration-accent">Cookie settings</button>. See the <a href="cookies.html" class="text-textMain underline decoration-white/30 hover:text-accent hover:decoration-accent">cookie policy</a> for details.</p>
             </div>
 
             <div>
@@ -125,7 +137,7 @@
                 <div class="flex items-center justify-center md:justify-start gap-3 text-[10px] tracking-widest uppercase text-textMuted/50">
                     <a href="privacy.html" class="hover:text-accent transition-colors">Privacy</a><span>•</span>
                     <a href="terms.html" class="hover:text-accent transition-colors">Terms</a><span>•</span>
-                    <a href="cookies.html" class="hover:text-accent transition-colors">Cookies</a>
+                    <a href="cookies.html" class="hover:text-accent transition-colors">Cookies</a><span>•</span><button type="button" onclick="openCookieSettings()" class="uppercase tracking-widest hover:text-accent transition-colors">Cookie settings</button>
                 </div>
             </div>
             <div class="flex items-center gap-6 text-xl text-textMuted">

@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-6V0QZLT5W2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-6V0QZLT5W2');
+</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LOGAN | Terms of Service</title>
@@ -34,6 +43,7 @@
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
         }
     </style>
+    <script src="consent.js" defer></script>
 </head>
 <body class="relative min-h-screen flex flex-col font-sans">
     <div class="noise-overlay"></div>
@@ -76,7 +86,7 @@
                 <div class="flex items-center justify-center md:justify-start gap-3 text-[10px] tracking-widest uppercase text-textMuted/50">
                     <a href="privacy.html" class="hover:text-accent transition-colors">Privacy</a><span>•</span>
                     <a href="terms.html" class="hover:text-accent transition-colors">Terms</a><span>•</span>
-                    <a href="cookies.html" class="hover:text-accent transition-colors">Cookies</a>
+                    <a href="cookies.html" class="hover:text-accent transition-colors">Cookies</a><span>•</span><button type="button" onclick="openCookieSettings()" class="uppercase tracking-widest hover:text-accent transition-colors">Cookie settings</button>
                 </div>
             </div>
             <div class="flex items-center gap-6 text-xl text-textMuted">

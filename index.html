@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-6V0QZLT5W2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-6V0QZLT5W2');
+</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LOGAN | Music Producer & Beatmaker</title>
@@ -104,6 +113,7 @@
             background: #444;
         }
     </style>
+    <script src="consent.js" defer></script>
 </head>
 <body class="relative min-h-screen flex flex-col font-sans">
     <div class="noise-overlay"></div>
@@ -233,7 +243,7 @@
                     <span>•</span>
                     <a href="terms.html" class="hover:text-accent transition-colors">Terms</a>
                     <span>•</span>
-                    <a href="cookies.html" class="hover:text-accent transition-colors">Cookies</a>
+                    <a href="cookies.html" class="hover:text-accent transition-colors">Cookies</a><span>•</span><button type="button" onclick="openCookieSettings()" class="uppercase tracking-widest hover:text-accent transition-colors">Cookie settings</button>
                 </div>
             </div>
             
