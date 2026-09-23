@@ -1,12 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
-<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="favicon-180.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="favicon-192.png">
-    <link rel="icon" type="image/png" sizes="512x512" href="favicon-512.png">
-    <link rel="shortcut icon" href="favicon.ico">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LOGAN | Music Producer & Beatmaker</title>
@@ -161,7 +155,21 @@
             <p class="text-textMuted font-light leading-relaxed text-sm md:text-base">
                 Currently expanding his creative work at the School of Digital Arts (SODA) at Manchester Metropolitan University, he strips away the unnecessary to reveal the raw, rhythmic core underneath. Every snare is synthesized from scratch, designed for vocalists and filmmakers who demand space, depth, and cinematic gravity.
             </p>
-            <div class="pt-4 flex gap-4">
+            
+            <!-- Equipment List Section -->
+            <div class="w-full pt-2">
+                <h3 class="text-xs font-semibold tracking-widest uppercase text-textMain mb-4">Studio Arsenal</h3>
+                <ul class="text-textMuted font-light text-sm flex flex-col gap-3">
+                    <li class="flex items-center gap-3"><i class="ph ph-laptop text-accent text-lg"></i> Apple Macbook Air M3 (Running macOS Tahoe)</li>
+                    <li class="flex items-center gap-3"><i class="ph ph-piano-keys text-accent text-lg"></i> KeyLab 88 mk3</li>
+                    <li class="flex items-center gap-3"><i class="ph ph-sliders text-accent text-lg"></i> Roland SH101 Synth</li>
+                    <li class="flex items-center gap-3"><i class="ph ph-waveform text-accent text-lg"></i> Korg Collection Synths</li>
+                    <li class="flex items-center gap-3"><i class="ph ph-wave-sawtooth text-accent text-lg"></i> Arturia Softsynths</li>
+                    <li class="flex items-center gap-3"><i class="ph ph-plug text-accent text-lg"></i> Various Digital Plugins</li>
+                </ul>
+            </div>
+
+            <div class="pt-4 flex gap-4 flex-wrap">
                 <span class="text-xs tracking-widest uppercase text-white/50 border border-white/10 px-3 py-1 rounded-full">Ambient</span>
                 <span class="text-xs tracking-widest uppercase text-white/50 border border-white/10 px-3 py-1 rounded-full">Lo-Fi</span>
                 <span class="text-xs tracking-widest uppercase text-white/50 border border-white/10 px-3 py-1 rounded-full">Trap</span>
@@ -184,13 +192,13 @@
         
         <video 
             id="store-video"
-            class="absolute inset-0 w-full h-full object-cover z-0 opacity-10"
+            class="absolute inset-0 w-full h-full object-cover z-0 opacity-40 mix-blend-screen"
             src="assets/city-fx.webm" 
             muted 
             playsinline>
         </video>
         
-        <div class="absolute inset-0 bg-gradient-to-t from-surface to-surface/80 z-0 pointer-events-none"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-surface to-surface/40 z-0 pointer-events-none"></div>
 
         <div class="max-w-6xl mx-auto relative z-10">
             <div class="flex flex-col md:flex-row justify-between items-baseline mb-16 border-b border-white/10 pb-6">
@@ -245,7 +253,7 @@
             trackListContainer.innerHTML = '';
             tracks.forEach(track => {
                 const trackEl = document.createElement('div');
-                trackEl.className = 'group flex flex-col lg:flex-row items-center justify-between p-4 rounded-lg hover:bg-surfaceHover transition-colors duration-300 border border-transparent hover:border-white/5 gap-4 lg:gap-8 backdrop-blur-sm';
+                trackEl.className = 'group flex flex-col lg:flex-row items-center justify-between p-4 rounded-lg hover:bg-surfaceHover transition-colors duration-300 border border-transparent hover:border-white/5 gap-4 lg:gap-8 backdrop-blur-sm bg-surface/50';
                 
                 trackEl.innerHTML = `
                     <div class="flex items-center gap-6 w-full lg:w-1/3">
