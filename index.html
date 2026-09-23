@@ -177,6 +177,8 @@
             </div>
         </div>
         <div class="w-full lg:w-1/2 order-1 lg:order-2">
+            <!-- Outer wrapper is not clipped, so the portrait can hang over the video's corner -->
+            <div class="relative">
             <div class="relative w-full aspect-[4/5] overflow-hidden rounded-md bg-darker">
                 <video 
                     id="about-video"
@@ -186,6 +188,12 @@
                     playsinline
                     class="object-cover w-full h-full absolute inset-0 opacity-80">
                 </video>
+            </div>
+            <img
+                src="assets/logan.png"
+                alt="Logan"
+                loading="lazy"
+                class="absolute z-10 -bottom-6 -left-4 md:-bottom-10 md:-left-10 w-1/2 md:w-[55%] h-auto pointer-events-none select-none drop-shadow-[0_20px_30px_rgba(0,0,0,0.8)]">
             </div>
         </div>
     </section>
@@ -230,9 +238,9 @@
             </div>
             
             <div class="flex items-center gap-6 text-xl text-textMuted">
-                <a href="#" class="hover:text-accent transition-colors"><i class="ph ph-soundcloud-logo"></i></a>
-                <a href="#" class="hover:text-accent transition-colors"><i class="ph ph-instagram-logo"></i></a>
-                <a href="#" class="hover:text-accent transition-colors"><i class="ph ph-youtube-logo"></i></a>
+                <a href="#" class="hover:text-accent transition-colors" aria-label="SoundCloud"><i class="ph ph-soundcloud-logo"></i></a>
+                <a href="#" class="hover:text-accent transition-colors" aria-label="Instagram"><i class="ph ph-instagram-logo"></i></a>
+                <a href="#" class="hover:text-accent transition-colors" aria-label="YouTube"><i class="ph ph-youtube-logo"></i></a>
             </div>
 
             <div>
