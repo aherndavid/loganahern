@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking & Inquiries | LOGAN</title>
+    <meta name="description" content="Book LOGAN for custom beats, mixing, sound design and studio sessions.">
+
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['"Orbitron"', 'sans-serif'] },
+                    colors: {
+                        dark: '#000000',
+                        darker: '#050505',
+                        surface: '#121212',
+                        surfaceHover: '#1a1a1a',
+                        textMain: '#f4f4f5',
+                        textMuted: '#a1a1aa',
+                        accent: '#9d4edd',
+                        accentHover: '#c77dff'
+                    },
+                    letterSpacing: { widest: '.25em' }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        @font-face {
+            font-family: 'Orbitron';
+            src: url('fonts/goodtimes.woff2') format('woff2'),
+                 url('fonts/goodtimes.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        body {
+            background-color: #000000;
+            color: #f4f4f5;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        ::selection { background-color: #9d4edd; color: #ffffff; }
+
+        .noise-overlay {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            pointer-events: none; z-index: 50; opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #000000; }
+        ::-webkit-scrollbar-thumb { background: #222; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #444; }
+
+        /* Form fields: underline style, glows purple on focus */
+        .field {
+            width: 100%;
+            background: transparent;
+            border: 0;
+            border-bottom: 1px solid rgba(255,255,255,0.15);
+            padding: 0.75rem 0;
+            color: #f4f4f5;
+            font-size: 0.9rem;
+            letter-spacing: 0.05em;
+            border-radius: 0;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        .field::placeholder { color: #52525b; }
+        .field:focus {
+            outline: none;
+            border-bottom-color: #9d4edd;
+            box-shadow: 0 1px 0 0 #9d4edd, 0 8px 16px -12px rgba(157, 78, 221, 0.6);
+        }
+        .field.invalid { border-bottom-color: #f87171; }
+        select.field { appearance: none; cursor: pointer; }
+        select.field option { background: #121212; color: #f4f4f5; }
+        input[type="date"].field { color-scheme: dark; }
+        textarea.field { resize: vertical; min-height: 8rem; line-height: 1.6; }
+
+        /* Service picker tiles */
+        .service input { position: absolute; opacity: 0; pointer-events: none; }
+        .service label {
+            display: flex; flex-direction: column; gap: 0.75rem;
+            height: 100%; padding: 1.25rem;
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 0.375rem;
+            background: rgba(18,18,18,0.6);
+            cursor: pointer;
+            transition: border-color 0.3s, background-color 0.3s;
+        }
+        .service label:hover { border-color: rgba(255,255,255,0.2); background: #1a1a1a; }
+        .service input:checked + label {
+            border-color: #9d4edd;
+            background: rgba(157, 78, 221, 0.08);
+            box-shadow: 0 0 20px -6px rgba(157, 78, 221, 0.5);
+        }
+        .service input:checked + label i { color: #c77dff; }
+        .service input:focus-visible + label { outline: 2px solid #c77dff; outline-offset: 2px; }
+
+        a:focus-visible, button:focus-visible { outline: 2px solid #c77dff; outline-offset: 3px; }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { transition: none !important; animation: none !important; }
+        }
+    </style>
+</head>
+<body class="relative min-h-screen flex flex-col font-sans">
+    <div class="noise-overlay"></div>
+
+    <nav class="fixed top-0 left-0 w-full z-40 px-6 py-6 flex justify-between items-center mix-blend-difference">
+        <a href="index.html" class="text-xs tracking-widest font-semibold uppercase">LOGAN</a>
+        <div class="flex gap-6 text-xs tracking-widest">
+            <a href="index.html#about" class="hover:text-accent transition-colors duration-300">About</a>
+            <a href="index.html#store" class="hover:text-accent transition-colors duration-300">Store</a>
+            <a href="assets/logan-cv.pdf" target="_blank" rel="noopener noreferrer" class="hover:text-accent transition-colors duration-300">CV</a>
+        </div>
+    </nav>
+
+    <header class="relative pt-40 pb-20 px-6 md:px-16 overflow-hidden">
+        <video
+            class="absolute inset-0 w-full h-full object-cover z-0 opacity-30"
+            src="assets/city-pt2.webm"
+            autoplay
+            muted
+            loop
+            playsinline
+            aria-hidden="true">
+        </video>
+        <div class="absolute inset-0 bg-gradient-to-b from-black/50 to-black z-0 pointer-events-none"></div>
+
+        <div class="relative z-10 max-w-4xl mx-auto">
+            <h1 class="text-4xl md:text-6xl font-light tracking-[0.2em] uppercase mb-6">Book a Session</h1>
+            <div class="h-px w-16 bg-accent mb-6"></div>
+            <p class="text-textMuted font-light leading-relaxed text-sm md:text-base max-w-xl">
+                Custom beats, mixing, scoring for film or time in the studio. Tell Logan what you're working on and he'll reply within 48 hours with availability and a quote.
+            </p>
+        </div>
+    </header>
+
+    <main class="relative z-10 px-6 md:px-16 pb-32">
+        <form id="booking-form" class="max-w-4xl mx-auto flex flex-col gap-16" novalidate>
+
+            <!-- Service -->
+            <fieldset>
+                <legend class="text-sm tracking-widest uppercase text-textMain mb-2">What do you need?</legend>
+                <p class="text-xs text-textMuted mb-6">Pick the closest match. You can add detail further down.</p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3" id="service-group">
+                    <div class="service relative">
+                        <input type="radio" name="service" id="svc-beat" value="Custom beat" required>
+                        <label for="svc-beat">
+                            <i class="ph ph-waveform text-2xl text-textMuted transition-colors"></i>
+                            <span class="text-sm tracking-wide">Custom beat</span>
+                            <span class="text-xs text-textMuted leading-relaxed">An exclusive track built around your vocal or idea.</span>
+                        </label>
+                    </div>
+                    <div class="service relative">
+                        <input type="radio" name="service" id="svc-mix" value="Mixing & mastering">
+                        <label for="svc-mix">
+                            <i class="ph ph-sliders-horizontal text-2xl text-textMuted transition-colors"></i>
+                            <span class="text-sm tracking-wide">Mixing & mastering</span>
+                            <span class="text-xs text-textMuted leading-relaxed">Send your stems and get a finished, release-ready track.</span>
+                        </label>
+                    </div>
+                    <div class="service relative">
+                        <input type="radio" name="service" id="svc-film" value="Film & sound design">
+                        <label for="svc-film">
+                            <i class="ph ph-film-strip text-2xl text-textMuted transition-colors"></i>
+                            <span class="text-sm tracking-wide">Film & sound design</span>
+                            <span class="text-xs text-textMuted leading-relaxed">Score, ambience or textures for picture, games or ads.</span>
+                        </label>
+                    </div>
+                    <div class="service relative">
+                        <input type="radio" name="service" id="svc-studio" value="Studio session">
+                        <label for="svc-studio">
+                            <i class="ph ph-piano-keys text-2xl text-textMuted transition-colors"></i>
+                            <span class="text-sm tracking-wide">Studio session</span>
+                            <span class="text-xs text-textMuted leading-relaxed">Work on your project together, in person or remotely.</span>
+                        </label>
+                    </div>
+                    <div class="service relative">
+                        <input type="radio" name="service" id="svc-license" value="Exclusive licence">
+                        <label for="svc-license">
+                            <i class="ph ph-key text-2xl text-textMuted transition-colors"></i>
+                            <span class="text-sm tracking-wide">Exclusive licence</span>
+                            <span class="text-xs text-textMuted leading-relaxed">Buy full rights to a beat from the store.</span>
+                        </label>
+                    </div>
+                    <div class="service relative">
+                        <input type="radio" name="service" id="svc-other" value="Something else">
+                        <label for="svc-other">
+                            <i class="ph ph-chat-circle-dots text-2xl text-textMuted transition-colors"></i>
+                            <span class="text-sm tracking-wide">Something else</span>
+                            <span class="text-xs text-textMuted leading-relaxed">Collaborations, press, or anything not listed.</span>
+                        </label>
+                    </div>
+                </div>
+                <p class="error-msg hidden text-xs text-red-400 mt-3" data-for="service">Choose the type of work you're booking.</p>
+            </fieldset>
+
+            <!-- Contact -->
+            <fieldset>
+                <legend class="text-sm tracking-widest uppercase text-textMain mb-8">Your details</legend>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-8">
+                    <div>
+                        <label for="name" class="block text-xs text-textMuted tracking-wide">Name or artist name</label>
+                        <input class="field" type="text" id="name" name="name" autocomplete="name" required>
+                        <p class="error-msg hidden text-xs text-red-400 mt-2" data-for="name">Enter your name.</p>
+                    </div>
+                    <div>
+                        <label for="email" class="block text-xs text-textMuted tracking-wide">Email</label>
+                        <input class="field" type="email" id="email" name="email" autocomplete="email" required>
+                        <p class="error-msg hidden text-xs text-red-400 mt-2" data-for="email">Enter an email address like name@example.com.</p>
+                    </div>
+                    <div>
+                        <label for="phone" class="block text-xs text-textMuted tracking-wide">Phone <span class="text-textMuted/50">(optional)</span></label>
+                        <input class="field" type="tel" id="phone" name="phone" autocomplete="tel">
+                    </div>
+                    <div>
+                        <label for="socials" class="block text-xs text-textMuted tracking-wide">Instagram or SoundCloud <span class="text-textMuted/50">(optional)</span></label>
+                        <input class="field" type="text" id="socials" name="socials" placeholder="@yourname">
+                    </div>
+                </div>
+            </fieldset>
+
+            <!-- Project -->
+            <fieldset>
+                <legend class="text-sm tracking-widest uppercase text-textMain mb-8">The project</legend>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-x-10 gap-y-8">
+                    <div>
+                        <label for="date" class="block text-xs text-textMuted tracking-wide">Preferred start date</label>
+                        <input class="field" type="date" id="date" name="date">
+                    </div>
+                    <div class="relative">
+                        <label for="deadline" class="block text-xs text-textMuted tracking-wide">Deadline</label>
+                        <select class="field" id="deadline" name="deadline">
+                            <option value="Flexible">Flexible</option>
+                            <option value="Within 1 week">Within 1 week</option>
+                            <option value="2 to 4 weeks">2 to 4 weeks</option>
+                            <option value="1 to 3 months">1 to 3 months</option>
+                        </select>
+                        <i class="ph ph-caret-down absolute right-0 bottom-3.5 text-textMuted pointer-events-none"></i>
+                    </div>
+                    <div class="relative">
+                        <label for="budget" class="block text-xs text-textMuted tracking-wide">Budget</label>
+                        <select class="field" id="budget" name="budget" required>
+                            <option value="" disabled selected>Select a range</option>
+                            <option value="Under £100">Under £100</option>
+                            <option value="£100 to £250">£100 to £250</option>
+                            <option value="£250 to £500">£250 to £500</option>
+                            <option value="£500 to £1,000">£500 to £1,000</option>
+                            <option value="Over £1,000">Over £1,000</option>
+                            <option value="Not sure yet">Not sure yet</option>
+                        </select>
+                        <i class="ph ph-caret-down absolute right-0 bottom-3.5 text-textMuted pointer-events-none"></i>
+                        <p class="error-msg hidden text-xs text-red-400 mt-2" data-for="budget">Choose a budget range, or "Not sure yet".</p>
+                    </div>
+                </div>
+
+                <div class="mt-8">
+                    <label for="references" class="block text-xs text-textMuted tracking-wide">Reference tracks or links <span class="text-textMuted/50">(optional)</span></label>
+                    <input class="field" type="text" id="references" name="references" placeholder="Spotify, YouTube or Dropbox links to songs with the sound you want">
+                </div>
+
+                <div class="mt-8">
+                    <label for="message" class="block text-xs text-textMuted tracking-wide">Tell Logan about it</label>
+                    <textarea class="field" id="message" name="message" required minlength="20" placeholder="Mood, tempo, where it will be used, and anything else that helps"></textarea>
+                    <p class="error-msg hidden text-xs text-red-400 mt-2" data-for="message">Add a few details about the project (at least 20 characters).</p>
+                </div>
+            </fieldset>
+
+            <!-- Spam trap: hidden from people, bots fill it in -->
+            <div class="hidden" aria-hidden="true">
+                <label for="website">Leave this empty</label>
+                <input type="text" id="website" name="_gotcha" tabindex="-1" autocomplete="off">
+            </div>
+
+            <!-- Consent + submit -->
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-8 border-t border-white/10 pt-10">
+                <div>
+                    <label class="flex items-start gap-3 text-xs text-textMuted leading-relaxed cursor-pointer max-w-md">
+                        <input type="checkbox" id="consent" name="consent" required class="mt-0.5 w-4 h-4 accent-[#9d4edd] flex-shrink-0">
+                        <span>I agree to my details being used to reply to this enquiry, as set out in the <a href="privacy.html" class="text-textMain underline decoration-white/30 hover:text-accent hover:decoration-accent">privacy policy</a>.</span>
+                    </label>
+                    <p class="error-msg hidden text-xs text-red-400 mt-2" data-for="consent">Tick the box so Logan can reply to you.</p>
+                </div>
+
+                <button type="submit" id="submit-btn" class="group relative px-10 py-4 border border-white/20 rounded-full overflow-hidden transition-all duration-500 hover:border-accent flex-shrink-0 self-start md:self-auto disabled:opacity-50 disabled:cursor-wait">
+                    <span class="relative z-10 text-xs tracking-widest uppercase group-hover:text-accent transition-colors duration-500 flex items-center gap-3">
+                        <span id="submit-label">Send booking request</span>
+                        <i class="ph ph-paper-plane-tilt text-base"></i>
+                    </span>
+                    <div class="absolute inset-0 bg-white/5 transform scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500 ease-out"></div>
+                </button>
+            </div>
+
+            <p id="form-error" role="alert" class="hidden text-sm text-red-400 -mt-8"></p>
+        </form>
+
+        <!-- Success state -->
+        <div id="form-success" class="hidden max-w-4xl mx-auto py-16" role="status" tabindex="-1">
+            <i class="ph ph-check-circle text-5xl text-accent mb-6 block"></i>
+            <h2 class="text-2xl md:text-4xl font-light tracking-widest uppercase mb-6">Request sent</h2>
+            <p class="text-textMuted font-light leading-relaxed text-sm md:text-base max-w-xl mb-10">
+                Thanks, <span id="success-name"></span>. Logan will reply to <span id="success-email" class="text-textMain"></span> within 48 hours. While you wait, have a listen to what's in the store.
+            </p>
+            <a href="index.html#store" class="group relative inline-block px-8 py-3 border border-white/20 rounded-full overflow-hidden transition-all duration-500 hover:border-accent">
+                <span class="relative z-10 text-xs tracking-widest uppercase group-hover:text-accent transition-colors duration-500">Browse beats</span>
+                <div class="absolute inset-0 bg-white/5 transform scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500 ease-out"></div>
+            </a>
+        </div>
+    </main>
+
+    <footer class="mt-auto py-12 px-6 border-t border-white/10 bg-darker relative z-10">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex flex-col gap-2 text-center md:text-left">
+                <span class="text-xs tracking-widest uppercase text-textMuted">
+                    © 2026 LOGAN. All Rights Reserved.
+                </span>
+                <div class="flex items-center justify-center md:justify-start gap-3 text-[10px] tracking-widest uppercase text-textMuted/50">
+                    <a href="privacy.html" class="hover:text-accent transition-colors">Privacy</a>
+                    <span>•</span>
+                    <a href="terms.html" class="hover:text-accent transition-colors">Terms</a>
+                    <span>•</span>
+                    <a href="cookies.html" class="hover:text-accent transition-colors">Cookies</a>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-6 text-xl text-textMuted">
+                <a href="#" class="hover:text-accent transition-colors" aria-label="SoundCloud"><i class="ph ph-soundcloud-logo"></i></a>
+                <a href="#" class="hover:text-accent transition-colors" aria-label="Instagram"><i class="ph ph-instagram-logo"></i></a>
+                <a href="#" class="hover:text-accent transition-colors" aria-label="YouTube"><i class="ph ph-youtube-logo"></i></a>
+            </div>
+
+            <div>
+                <a href="index.html" class="text-xs tracking-widest uppercase text-textMuted hover:text-accent transition-colors border-b border-transparent hover:border-accent pb-1">
+                    Back to home
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ============================================================
+        // SETUP: paste your Formspree endpoint here (free at formspree.io)
+        // e.g. 'https://formspree.io/f/abcdwxyz'
+        // If left empty, the form opens the visitor's email app instead,
+        // pre-filled and addressed to BOOKING_EMAIL.
+        // ============================================================
+        const FORM_ENDPOINT = '';
+        const BOOKING_EMAIL = 'bookings@example.com';
+
+        const form = document.getElementById('booking-form');
+        const submitBtn = document.getElementById('submit-btn');
+        const submitLabel = document.getElementById('submit-label');
+        const formError = document.getElementById('form-error');
+
+        // Don't allow start dates in the past
+        document.getElementById('date').min = new Date().toISOString().split('T')[0];
+
+        function showError(name, show) {
+            const msg = form.querySelector(`.error-msg[data-for="${name}"]`);
+            const input = form.elements[name];
+            if (msg) msg.classList.toggle('hidden', !show);
+            if (input && input.classList) input.classList.toggle('invalid', show);
+            if (input && input.setAttribute) input.setAttribute('aria-invalid', show ? 'true' : 'false');
+        }
+
+        function validate() {
+            const checks = {
+                service: !!form.querySelector('input[name="service"]:checked'),
+                name: form.elements['name'].value.trim().length > 0,
+                email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.elements['email'].value.trim()),
+                budget: form.elements['budget'].value !== '',
+                message: form.elements['message'].value.trim().length >= 20,
+                consent: form.elements['consent'].checked
+            };
+            let firstInvalid = null;
+            for (const [name, ok] of Object.entries(checks)) {
+                showError(name, !ok);
+                if (!ok && !firstInvalid) firstInvalid = name;
+            }
+            if (firstInvalid) {
+                const el = firstInvalid === 'service'
+                    ? form.querySelector('input[name="service"]')
+                    : form.elements[firstInvalid];
+                el.focus();
+                (firstInvalid === 'service' ? document.getElementById('service-group') : el)
+                    .scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+            return !firstInvalid;
+        }
+
+        // Clear an error as soon as the field is fixed
+        form.addEventListener('input', e => {
+            const name = e.target.name;
+            if (['name', 'email', 'budget', 'message', 'consent', 'service'].includes(name)) showError(name, false);
+        });
+        form.addEventListener('change', e => {
+            if (e.target.name === 'service' || e.target.name === 'budget' || e.target.name === 'consent') showError(e.target.name, false);
+        });
+
+        function showSuccess() {
+            document.getElementById('success-name').textContent = form.elements['name'].value.trim();
+            document.getElementById('success-email').textContent = form.elements['email'].value.trim();
+            form.classList.add('hidden');
+            const success = document.getElementById('form-success');
+            success.classList.remove('hidden');
+            success.focus();
+            window.scrollTo({ top: document.querySelector('main').offsetTop - 120, behavior: 'smooth' });
+        }
+
+        form.addEventListener('submit', async e => {
+            e.preventDefault();
+            formError.classList.add('hidden');
+            if (form.elements['_gotcha'].value) return; // bot
+            if (!validate()) return;
+
+            const data = new FormData(form);
+
+            // No endpoint set: fall back to the visitor's email app
+            if (!FORM_ENDPOINT) {
+                const lines = [];
+                for (const [k, v] of data.entries()) {
+                    if (k === '_gotcha' || k === 'consent' || !String(v).trim()) continue;
+                    lines.push(`${k[0].toUpperCase() + k.slice(1)}: ${v}`);
+                }
+                const subject = `Booking request: ${data.get('service')} from ${data.get('name')}`;
+                window.location.href = `mailto:${BOOKING_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(lines.join('\n'))}`;
+                return;
+            }
+
+            submitBtn.disabled = true;
+            submitLabel.textContent = 'Sending…';
+            try {
+                data.append('_subject', `Booking request: ${data.get('service')} from ${data.get('name')}`);
+                const res = await fetch(FORM_ENDPOINT, {
+                    method: 'POST',
+                    body: data,
+                    headers: { 'Accept': 'application/json' }
+                });
+                if (!res.ok) throw new Error(res.status);
+                showSuccess();
+            } catch (err) {
+                formError.textContent = `Your request didn't send. Check your connection and try again, or email ${BOOKING_EMAIL} directly.`;
+                formError.classList.remove('hidden');
+                submitBtn.disabled = false;
+                submitLabel.textContent = 'Send booking request';
+            }
+        });
+    </script>
+</body>
+</html>
