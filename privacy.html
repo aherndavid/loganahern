@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOGAN | Privacy Policy</title>
+    
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['"Orbitron"', 'sans-serif'], },
+                    colors: {
+                        dark: '#000000', darker: '#050505', surface: '#121212',
+                        textMain: '#f4f4f5', textMuted: '#a1a1aa', accent: '#9d4edd',
+                    },
+                    letterSpacing: { widest: '.25em', }
+                }
+            }
+        }
+    </script>
+    <style>
+        @font-face {
+            font-family: 'Orbitron';
+            src: url('fonts/goodtimes.woff2') format('woff2'), url('fonts/goodtimes.ttf') format('truetype');
+            font-weight: normal; font-style: normal; font-display: swap;
+        }
+        body { background-color: #000000; color: #f4f4f5; -webkit-font-smoothing: antialiased; }
+        ::selection { background-color: #9d4edd; color: #ffffff; }
+        .noise-overlay {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 50; opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+    </style>
+</head>
+<body class="relative min-h-screen flex flex-col font-sans">
+    <div class="noise-overlay"></div>
+
+    <nav class="fixed top-0 left-0 w-full z-40 px-6 py-6 flex justify-between items-center mix-blend-difference bg-black/50 backdrop-blur-md">
+        <div class="text-xs tracking-widest font-semibold uppercase">LOGAN</div>
+        <div class="flex gap-6 text-xs tracking-widest">
+            <a href="index.html" class="hover:text-accent transition-colors duration-300">Home</a>
+            <a href="index.html#store" class="hover:text-accent transition-colors duration-300">Store</a>
+        </div>
+    </nav>
+
+    <section class="flex-grow py-32 px-6 max-w-4xl mx-auto w-full relative z-10">
+        <h1 class="text-3xl md:text-5xl font-light tracking-widest uppercase mb-12 border-b border-white/10 pb-6">Privacy Policy</h1>
+        
+        <div class="space-y-8 text-sm md:text-base font-light text-textMuted leading-relaxed">
+            <div>
+                <h2 class="text-textMain text-lg tracking-widest uppercase mb-3">1. Information Collection</h2>
+                <p>We collect information you provide directly to us when you submit inquiries through our booking forms, sign up for updates, or license instrumental tracks. This may include your name, email address, and transaction details.</p>
+            </div>
+            
+            <div>
+                <h2 class="text-textMain text-lg tracking-widest uppercase mb-3">2. Use of Information</h2>
+                <p>We use the information we collect to deliver requested services, process beat licensing transactions, send technical notices, and communicate with you about products, services, and collaborations.</p>
+            </div>
+
+            <div>
+                <h2 class="text-textMain text-lg tracking-widest uppercase mb-3">3. Data Protection</h2>
+                <p>We implement appropriate technical and organizational measures to maintain the safety of your personal information. We do not sell, trade, or otherwise transfer your personally identifiable information to outside parties without your consent, except to trusted third parties who assist in operating our website and conducting our business.</p>
+            </div>
+            
+            <p class="pt-8 text-xs tracking-widest uppercase">Last Updated: September 2026</p>
+        </div>
+    </section>
+
+    <!-- Paste the updated footer here -->
+    <footer class="mt-auto py-12 px-6 border-t border-white/10 bg-darker relative z-10">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex flex-col gap-2 text-center md:text-left">
+                <span class="text-xs tracking-widest uppercase text-textMuted">© 2026 LOGAN. All Rights Reserved.</span>
+                <div class="flex items-center justify-center md:justify-start gap-3 text-[10px] tracking-widest uppercase text-textMuted/50">
+                    <a href="privacy.html" class="hover:text-accent transition-colors">Privacy</a><span>•</span>
+                    <a href="terms.html" class="hover:text-accent transition-colors">Terms</a><span>•</span>
+                    <a href="cookies.html" class="hover:text-accent transition-colors">Cookies</a>
+                </div>
+            </div>
+            <div class="flex items-center gap-6 text-xl text-textMuted">
+                <a href="#" class="hover:text-accent transition-colors"><i class="ph ph-soundcloud-logo"></i></a>
+                <a href="#" class="hover:text-accent transition-colors"><i class="ph ph-instagram-logo"></i></a>
+                <a href="#" class="hover:text-accent transition-colors"><i class="ph ph-youtube-logo"></i></a>
+            </div>
+            <div>
+                <a href="booking.html" class="text-xs tracking-widest uppercase text-textMuted hover:text-accent transition-colors border-b border-transparent hover:border-accent pb-1">Booking & Inquiries</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

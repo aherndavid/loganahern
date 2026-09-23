@@ -1,0 +1,84 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOGAN | Privacy Policy</title>
+    
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['"Orbitron"', 'sans-serif'], },
+                    colors: {
+                        dark: '#000000', darker: '#050505', surface: '#121212',
+                        textMain: '#f4f4f5', textMuted: '#a1a1aa', accent: '#9d4edd',
+                    },
+                    letterSpacing: { widest: '.25em', }
+                }
+            }
+        }
+    </script>
+    <style>
+        @font-face {
+            font-family: 'Orbitron';
+            src: url('fonts/goodtimes.woff2') format('woff2'), url('fonts/goodtimes.ttf') format('truetype');
+            font-weight: normal; font-style: normal; font-display: swap;
+        }
+        body { background-color: #000000; color: #f4f4f5; -webkit-font-smoothing: antialiased; }
+        ::selection { background-color: #9d4edd; color: #ffffff; }
+        .noise-overlay {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 50; opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+    </style>
+</head><section class="flex-grow py-32 px-6 max-w-4xl mx-auto w-full relative z-10">
+        <h1 class="text-3xl md:text-5xl font-light tracking-widest uppercase mb-12 border-b border-white/10 pb-6">Terms of Service</h1>
+        
+        <div class="space-y-8 text-sm md:text-base font-light text-textMuted leading-relaxed">
+            <div>
+                <h2 class="text-textMain text-lg tracking-widest uppercase mb-3">1. Beat Licensing & Usage</h2>
+                <p>All instrumentals, samples, and soundscapes available on this platform remain the intellectual property of Logan. Purchasing a license grants you specific usage rights as detailed in your license agreement. Non-exclusive licenses do not transfer copyright ownership.</p>
+            </div>
+            
+            <div>
+                <h2 class="text-textMain text-lg tracking-widest uppercase mb-3">2. Intellectual Property</h2>
+                <p>The site and its original content, features, audio files, and visual assets are owned by Logan and are protected by international copyright, trademark, patent, trade secret, and other intellectual property laws.</p>
+            </div>
+
+            <div>
+                <h2 class="text-textMain text-lg tracking-widest uppercase mb-3">3. Credit & Attribution</h2>
+                <p>Unless an exclusive rights agreement or ghost-production contract is signed, proper production credit must be given on all commercial releases (e.g., "Produced by LOGAN").</p>
+            </div>
+
+            <p class="pt-8 text-xs tracking-widest uppercase">Last Updated: September 2026</p>
+        </div>
+    </section>
+<footer class="mt-auto py-12 px-6 border-t border-white/10 bg-darker relative z-10">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex flex-col gap-2 text-center md:text-left">
+                <span class="text-xs tracking-widest uppercase text-textMuted">
+                    © 2026 LOGAN. All Rights Reserved.
+                </span>
+                <div class="flex items-center justify-center md:justify-start gap-3 text-[10px] tracking-widest uppercase text-textMuted/50">
+                    <a href="privacy.html" class="hover:text-accent transition-colors">Privacy</a>
+                    <span>•</span>
+                    <a href="terms.html" class="hover:text-accent transition-colors">Terms</a>
+                    <span>•</span>
+                    <a href="cookies.html" class="hover:text-accent transition-colors">Cookies</a>
+                </div>
+            </div>
+            
+            <div class="flex items-center gap-6 text-xl text-textMuted">
+                <a href="#" class="hover:text-accent transition-colors"><i class="ph ph-soundcloud-logo"></i></a>
+                <a href="#" class="hover:text-accent transition-colors"><i class="ph ph-instagram-logo"></i></a>
+                <a href="#" class="hover:text-accent transition-colors"><i class="ph ph-youtube-logo"></i></a>
+            </div>
+
+            <div>
+                <a href="booking.html" class="text-xs tracking-widest uppercase text-textMuted hover:text-accent transition-colors border-b border-transparent hover:border-accent pb-1">
+                    Booking & Inquiries
+                </a>
+            </div>
+        </div>
+    </footer>
