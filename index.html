@@ -124,6 +124,7 @@
             src="assets/city-pt1.webm" 
             autoplay 
             muted 
+            loop 
             playsinline>
         </video>
         
@@ -181,6 +182,7 @@
                     id="about-video"
                     src="assets/city-pt1.webm" 
                     muted 
+                    loop 
                     playsinline
                     class="object-cover w-full h-full absolute inset-0 opacity-80">
                 </video>
@@ -195,6 +197,7 @@
             class="absolute inset-0 w-full h-full object-cover z-0 opacity-40 mix-blend-screen"
             src="assets/city-pt2.webm" 
             muted 
+            loop 
             playsinline>
         </video>
         
@@ -397,7 +400,7 @@
                             console.log("Browser prevented autoplay:", error);
                         });
                         
-                        // Stop observing so the video only plays once
+                        // Stop observing once started (the loop attribute keeps it going)
                         observer.unobserve(video);
                     }
                 });
