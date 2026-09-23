@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOGAN | Music Producer & Beatmaker</title>
+    
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Orbitron"', 'sans-serif'],
+                    },
+                    colors: {
+                        dark: '#000000',
+                        darker: '#050505',
+                        surface: '#121212',
+                        surfaceHover: '#1a1a1a',
+                        textMain: '#f4f4f5',
+                        textMuted: '#a1a1aa',
+                        accent: '#9d4edd', 
+                        accentHover: '#c77dff'
+                    },
+                    letterSpacing: {
+                        widest: '.25em',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Local Font Import */
+        @font-face {
+            font-family: 'Orbitron';
+            src: url('fonts/goodtimes.woff2') format('woff2'),
+                 url('fonts/goodtimes.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        body {
+            background-color: #000000;
+            color: #f4f4f5;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Custom selection color */
+        ::selection {
+            background-color: #9d4edd;
+            color: #ffffff;
+        }
+
+        /* Abstract grain/noise overlay for cinematic feel */
+        .noise-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 50;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* Custom Audio Progress Bar Styling */
+        .progress-container {
+            width: 100%;
+            height: 2px;
+            background-color: #333;
+            position: relative;
+            cursor: pointer;
+            border-radius: 1px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background-color: #9d4edd;
+            width: 0%;
+            transition: width 0.1s linear;
+            box-shadow: 0 0 10px rgba(157, 78, 221, 0.5);
+        }
+
+        /* Hide scrollbar for a cleaner look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #000000;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #222;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #444;
+        }
+    </style>
+</head>
+<body class="relative min-h-screen flex flex-col font-sans">
+    <div class="noise-overlay"></div>
+
+    <nav class="fixed top-0 left-0 w-full z-40 px-6 py-6 flex justify-between items-center mix-blend-difference">
+        <div class="text-xs tracking-widest font-semibold uppercase">LOGAN</div>
+        <div class="flex gap-6 text-xs tracking-widest">
+            <a href="#about" class="hover:text-accent transition-colors duration-300">About</a>
+            <a href="#store" class="hover:text-accent transition-colors duration-300">Store</a>
+            <a href="assets/logan-cv.pdf" target="_blank" rel="noopener noreferrer" class="hover:text-accent transition-colors duration-300">CV</a>
+        </div>
+    </nav>
+
+    <header class="relative h-screen flex flex-col items-center justify-center text-center px-4 overflow-hidden">
+        <video 
+            id="hero-video"
+            class="absolute inset-0 w-full h-full object-cover z-0 opacity-70"
+            src="assets/city-appartment.webm" 
+            autoplay 
+            muted 
+            playsinline>
+        </video>
+        
+        <div class="absolute inset-0 bg-gradient-to-b from-black/40 to-black z-0 pointer-events-none"></div>
+
+        <h1 class="relative z-10 text-5xl md:text-8xl font-light tracking-[0.2em] md:tracking-[0.3em] mb-4 uppercase ml-2 md:ml-6">
+            LOGAN
+        </h1>
+        <p class="relative z-10 text-textMuted tracking-widest text-sm md:text-base font-light max-w-xl mx-auto mb-10 uppercase">
+            Cinematic Soundscapes & Analog Textures
+        </p>
+        <a href="#store" class="group relative z-10 px-8 py-3 border border-white/20 rounded-full overflow-hidden transition-all duration-500 hover:border-accent">
+            <span class="relative z-10 text-xs tracking-widest uppercase group-hover:text-accent transition-colors duration-500">Browse Beats</span>
+            <div class="absolute inset-0 bg-white/5 transform scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-500 ease-out"></div>
+        </a>
+        
+        <div class="absolute z-10 bottom-10 left-1/2 -translate-x-1/2 animate-bounce opacity-50">
+            <i class="ph ph-arrow-down text-xl"></i>
+        </div>
+    </header>
+
+    <section id="about" class="py-32 px-6 md:px-16 lg:px-32 max-w-7xl mx-auto w-full flex flex-col lg:flex-row items-center gap-16 lg:gap-32">
+        <div class="w-full lg:w-1/2 flex flex-col items-start space-y-8 order-2 lg:order-1">
+            <h2 class="text-3xl md:text-5xl font-light tracking-widest uppercase">The Architect</h2>
+            <div class="h-px w-16 bg-accent"></div>
+            <p class="text-textMuted font-light leading-relaxed text-sm md:text-base">
+                Forged in the intersection of organic instrumentation and digital manipulation. Logan's foundation was built studying Music Production at Northampton College, refining a minimalist approach to complex emotion.
+            </p>
+            <p class="text-textMuted font-light leading-relaxed text-sm md:text-base">
+                Currently expanding his creative work at the School of Digital Arts (SODA) at Manchester Metropolitan University, he strips away the unnecessary to reveal the raw, rhythmic core underneath. Every snare is synthesized from scratch, designed for vocalists and filmmakers who demand space, depth, and cinematic gravity.
+            </p>
+            <div class="pt-4 flex gap-4">
+                <span class="text-xs tracking-widest uppercase text-white/50 border border-white/10 px-3 py-1 rounded-full">Ambient</span>
+                <span class="text-xs tracking-widest uppercase text-white/50 border border-white/10 px-3 py-1 rounded-full">Lo-Fi</span>
+                <span class="text-xs tracking-widest uppercase text-white/50 border border-white/10 px-3 py-1 rounded-full">Trap</span>
+            </div>
+        </div>
+        <div class="w-full lg:w-1/2 order-1 lg:order-2">
+            <div class="relative w-full aspect-[4/5] overflow-hidden rounded-md bg-darker">
+                <video 
+                    id="about-video"
+                    src="assets/city-fx-02.webm" 
+                    muted 
+                    playsinline
+                    class="object-cover w-full h-full absolute inset-0 opacity-80">
+                </video>
+            </div>
+        </div>
+    </section>
+
+    <section id="store" class="py-24 px-4 md:px-12 w-full bg-surface relative overflow-hidden">
+        
+        <video 
+            id="store-video"
+            class="absolute inset-0 w-full h-full object-cover z-0 opacity-10"
+            src="assets/city-fx.webm" 
+            muted 
+            playsinline>
+        </video>
+        
+        <div class="absolute inset-0 bg-gradient-to-t from-surface to-surface/80 z-0 pointer-events-none"></div>
+
+        <div class="max-w-6xl mx-auto relative z-10">
+            <div class="flex flex-col md:flex-row justify-between items-baseline mb-16 border-b border-white/10 pb-6">
+                <h2 class="text-2xl md:text-4xl font-light tracking-widest uppercase">License A Beat</h2>
+                <p class="text-textMuted text-xs tracking-widest mt-4 md:mt-0">SORT: NEWEST ARRIVALS</p>
+            </div>
+
+            <div class="flex flex-col gap-2" id="track-list">
+                </div>
+        </div>
+    </section>
+
+    <footer class="mt-auto py-12 px-6 border-t border-white/10 bg-darker relative z-10">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="text-xs tracking-widest uppercase text-textMuted">
+                © 2026 LOGAN. All Rights Reserved.
+            </div>
+            
+            <div class="flex items-center gap-6 text-xl text-textMuted">
+                <a href="#" class="hover:text-accent transition-colors"><i class="ph ph-soundcloud-logo"></i></a>
+                <a href="#" class="hover:text-accent transition-colors"><i class="ph ph-instagram-logo"></i></a>
+                <a href="#" class="hover:text-accent transition-colors"><i class="ph ph-youtube-logo"></i></a>
+            </div>
+
+            <div>
+                <a href="booking.html" class="text-xs tracking-widest uppercase text-textMuted hover:text-accent transition-colors border-b border-transparent hover:border-accent pb-1">
+                    Booking & Inquiries
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Track Data Structure
+        const tracks = [
+            { id: 1, title: "Nocturne in Static", bpm: 140, genre: "Ambient Trap", price: "9.99" },
+            { id: 2, title: "Greyfield", bpm: 88, genre: "Lo-Fi Hip Hop", price: "9.99" },
+            { id: 3, title: "Obsidian Tears", bpm: 120, genre: "Cinematic", price: "9.99" },
+            { id: 4, title: "Fractured Light", bpm: 115, genre: "Electronic", price: "9.99" },
+            { id: 5, title: "Void Resonance", bpm: 95, genre: "Industrial", price: "9.99" },
+            { id: 6, title: "Producer Bundle (x10 Samples & 10 Beats)", bpm: "-", genre: "WAV/AIF Stereo 44Hz", price: "49.99" }
+        ];
+
+        let currentlyPlayingId = null;
+        let progressInterval = null;
+        let simulatedProgress = 0;
+
+        // Render Tracks
+        const trackListContainer = document.getElementById('track-list');
+
+        function renderTracks() {
+            trackListContainer.innerHTML = '';
+            tracks.forEach(track => {
+                const trackEl = document.createElement('div');
+                trackEl.className = 'group flex flex-col lg:flex-row items-center justify-between p-4 rounded-lg hover:bg-surfaceHover transition-colors duration-300 border border-transparent hover:border-white/5 gap-4 lg:gap-8 backdrop-blur-sm';
+                
+                trackEl.innerHTML = `
+                    <div class="flex items-center gap-6 w-full lg:w-1/3">
+                        <button onclick="togglePlay(${track.id})" class="text-textMuted hover:text-accent transition-colors outline-none focus:outline-none flex-shrink-0" aria-label="Play track">
+                            <i class="ph ph-play-circle text-4xl" id="play-icon-${track.id}"></i>
+                        </button>
+                        <div class="flex flex-col">
+                            <h3 class="text-base font-medium tracking-wide text-textMain group-hover:text-accent transition-colors">${track.title}</h3>
+                            <p class="text-xs text-textMuted tracking-widest mt-1 uppercase">${track.bpm} BPM • ${track.genre}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="w-full lg:w-1/2 flex items-center gap-4 hidden md:flex">
+                        <span class="text-xs text-textMuted tabular-nums" id="time-current-${track.id}">0:00</span>
+                        <div class="progress-container flex-1" onclick="seekTrack(${track.id}, event)">
+                            <div class="progress-bar" id="progress-${track.id}"></div>
+                        </div>
+                        <span class="text-xs text-textMuted tabular-nums">3:45</span>
+                    </div>
+
+                    <div class="flex items-center justify-between w-full lg:w-auto gap-6 mt-4 lg:mt-0">
+                        <span class="text-sm font-light tracking-widest">£${track.price}</span>
+                        <button class="px-5 py-2 text-xs tracking-widest uppercase border border-white/20 rounded hover:border-accent hover:text-accent transition-all duration-300 flex items-center gap-2">
+                            <i class="ph ph-shopping-cart"></i> License
+                        </button>
+                    </div>
+                `;
+                trackListContainer.appendChild(trackEl);
+            });
+        }
+
+        // Audio Player Logic (Simulated)
+        function togglePlay(id) {
+            const icon = document.getElementById(`play-icon-${id}`);
+            
+            if (currentlyPlayingId === id) {
+                pauseTrack(id);
+                currentlyPlayingId = null;
+                return;
+            }
+
+            if (currentlyPlayingId !== null) {
+                pauseTrack(currentlyPlayingId);
+            }
+
+            playTrack(id);
+        }
+
+        function playTrack(id) {
+            const icon = document.getElementById(`play-icon-${id}`);
+            icon.classList.remove('ph-play-circle');
+            icon.classList.add('ph-pause-circle');
+            icon.classList.add('text-accent');
+            
+            currentlyPlayingId = id;
+            
+            if (simulatedProgress >= 100) simulatedProgress = 0;
+
+            clearInterval(progressInterval);
+            progressInterval = setInterval(() => {
+                simulatedProgress += 0.2;
+                if (simulatedProgress >= 100) {
+                    pauseTrack(id);
+                    simulatedProgress = 0;
+                    updateProgressBar(id, 0);
+                    currentlyPlayingId = null;
+                } else {
+                    updateProgressBar(id, simulatedProgress);
+                }
+            }, 100);
+        }
+
+        function pauseTrack(id) {
+            const icon = document.getElementById(`play-icon-${id}`);
+            if(icon) {
+                icon.classList.remove('ph-pause-circle');
+                icon.classList.add('ph-play-circle');
+                icon.classList.remove('text-accent');
+            }
+            clearInterval(progressInterval);
+        }
+
+        function updateProgressBar(id, percentage) {
+            const progressBar = document.getElementById(`progress-${id}`);
+            const timeDisplay = document.getElementById(`time-current-${id}`);
+            
+            if (progressBar) {
+                progressBar.style.width = `${percentage}%`;
+            }
+            
+            if (timeDisplay) {
+                const totalSeconds = 225;
+                const currentSeconds = Math.floor((percentage / 100) * totalSeconds);
+                const mins = Math.floor(currentSeconds / 60);
+                const secs = currentSeconds % 60;
+                timeDisplay.innerText = `${mins}:${secs.toString().padStart(2, '0')}`;
+            }
+        }
+
+        function seekTrack(id, event) {
+            if (currentlyPlayingId !== id) {
+                togglePlay(id);
+            }
+            
+            const container = event.currentTarget;
+            const clickX = event.offsetX;
+            const width = container.clientWidth;
+            const clickPercentage = (clickX / width) * 100;
+            
+            simulatedProgress = clickPercentage;
+            updateProgressBar(id, clickPercentage);
+        }
+
+        // Initialize Tracks and Scroll Observers
+        document.addEventListener('DOMContentLoaded', () => {
+            renderTracks();
+
+            // Set up Intersection Observer for video elements
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.3 // Play when 30% of the video container is visible
+            };
+
+            const videoObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const video = entry.target;
+                        
+                        // Play the video and catch any autoplay restrictions
+                        video.play().catch(error => {
+                            console.log("Browser prevented autoplay:", error);
+                        });
+                        
+                        // Stop observing so the video only plays once
+                        observer.unobserve(video);
+                    }
+                });
+            }, observerOptions);
+
+            const aboutVideo = document.getElementById('about-video');
+            const storeVideo = document.getElementById('store-video');
+
+            if (aboutVideo) videoObserver.observe(aboutVideo);
+            if (storeVideo) videoObserver.observe(storeVideo);
+        });
+    </script>
+</body>
+</html>
