@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-6V0QZLT5W2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-6V0QZLT5W2');
+</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LOGAN | Example</title>
+
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['"Orbitron"', 'sans-serif'] },
+                    colors: {
+                        dark: '#000000', darker: '#050505', surface: '#121212', surfaceHover: '#1a1a1a',
+                        textMain: '#f4f4f5', textMuted: '#a1a1aa', accent: '#9d4edd', accentHover: '#c77dff'
+                    },
+                    letterSpacing: { widest: '.25em' }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        @font-face {
+            font-family: 'Orbitron';
+            src: url('fonts/goodtimes.woff2') format('woff2'),
+                 url('fonts/goodtimes.ttf') format('truetype');
+            font-weight: normal; font-style: normal; font-display: swap;
+        }
+        body { background-color: #000000; color: #f4f4f5; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+        ::selection { background-color: #9d4edd; color: #ffffff; }
+        .noise-overlay {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 50; opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+        .progress-container { width: 100%; height: 2px; background-color: #333; position: relative; cursor: pointer; border-radius: 1px; overflow: hidden; }
+        .progress-bar { height: 100%; background-color: #9d4edd; width: 0%; box-shadow: 0 0 10px rgba(157, 78, 221, 0.5); }
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #000000; }
+        ::-webkit-scrollbar-thumb { background: #222; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #444; }
+
+    </style>
+    <script src="consent.js" defer></script>
+</head>
+<body class="relative min-h-screen flex flex-col font-sans">
+    <div class="noise-overlay"></div>
+
+    <nav class="fixed top-0 left-0 w-full z-40 px-6 py-6 flex justify-between items-center mix-blend-difference">
+        <a href="index.html" class="text-xs tracking-widest font-semibold uppercase">LOGAN</a>
+        <div class="flex gap-6 text-xs tracking-widest">
+            <a href="index.html#about" class="hover:text-accent transition-colors duration-300">About</a>
+            <a href="index.html#store" class="hover:text-accent transition-colors duration-300">Store</a>
+            <a href="liquid.html" class="text-accent" aria-current="page">Example</a>
+            <a href="assets/logan-cv.pdf" target="_blank" rel="noopener noreferrer" class="hover:text-accent transition-colors duration-300">CV</a>
+        </div>
+    </nav>
+
+    <!-- Ink EQ hero: the EQ fills the whole screen; click anywhere to play or pause -->
+    <header class="relative h-screen flex items-center justify-center overflow-hidden bg-black cursor-pointer" id="stage">
+        <!-- Segment clock sits behind the EQ -->
+        <div class="absolute inset-0 z-0 flex items-center justify-center pointer-events-none px-[6vw]" aria-hidden="true">
+            <svg id="clock" class="w-full max-h-[58vh]" preserveAspectRatio="xMidYMid meet"></svg>
+        </div>
+
+        <!-- Difference blend: lines are off-white over black and turn black where they cross the digits -->
+        <canvas id="eq" class="absolute inset-0 w-full h-full z-[1] mix-blend-difference" aria-hidden="true"></canvas>
+
+        <!-- Frequency scale, positioned by the same log mapping as the EQ lines -->
+        <div id="freq-axis" class="absolute inset-x-0 bottom-0 h-8 z-10 pointer-events-none mix-blend-difference" aria-hidden="true"></div>
+
+        <button id="hero-play" class="absolute z-10 top-20 md:top-24 left-6 md:left-10 text-left mix-blend-difference text-2xl md:text-4xl font-light tracking-[0.2em] md:tracking-[0.3em] uppercase hover:text-accent transition-colors duration-500 focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-8" aria-label="Play Example" ><span id="hero-title">Example</span></button>
+
+        <div class="absolute z-10 bottom-12 left-1/2 -translate-x-1/2 animate-bounce opacity-50 pointer-events-none">
+            <i class="ph ph-arrow-down text-xl"></i>
+        </div>
+    </header>
+
+    <!-- Single track, styled like the store list -->
+    <section class="py-24 px-4 md:px-12 w-full bg-black">
+        <div class="max-w-6xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-baseline mb-12 border-b border-white/10 pb-6">
+                <h2 class="text-2xl md:text-4xl font-light tracking-widest uppercase">Now Playing</h2>
+                <p class="text-textMuted text-xs tracking-widest mt-4 md:mt-0 uppercase">Low on the left, high on the right</p>
+            </div>
+
+            <div class="group flex flex-col lg:flex-row items-center justify-between p-4 rounded-lg hover:bg-surfaceHover transition-colors duration-300 border border-transparent hover:border-white/5 gap-4 lg:gap-8 bg-surface/50">
+                <div class="flex items-center gap-6 w-full lg:w-1/3">
+                    <button id="row-play" class="text-textMuted hover:text-accent transition-colors outline-none focus-visible:text-accent flex-shrink-0" aria-label="Play track">
+                        <i class="ph ph-play-circle text-4xl" id="row-icon"></i>
+                    </button>
+                    <div class="flex flex-col">
+                        <h3 class="text-base font-medium tracking-wide text-textMain group-hover:text-accent transition-colors" id="track-title">Example</h3>
+                        <p class="text-xs text-textMuted tracking-widest mt-1 uppercase" id="track-meta">120 BPM • Cinematic</p>
+                    </div>
+                </div>
+
+                <div class="w-full lg:w-1/2 flex items-center gap-4">
+                    <span class="text-xs text-textMuted tabular-nums" id="time-current">0:00</span>
+                    <div class="progress-container flex-1" id="seek" role="slider" aria-label="Seek" tabindex="0" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                        <div class="progress-bar" id="progress"></div>
+                    </div>
+                    <span class="text-xs text-textMuted tabular-nums" id="time-total">0:00</span>
+                </div>
+
+                <div class="flex items-center justify-between w-full lg:w-auto gap-6 mt-4 lg:mt-0">
+                    <span class="text-sm font-light tracking-widest" id="track-price">£9.99</span>
+                    <a href="index.html#store" class="px-5 py-2 text-xs tracking-widest uppercase border border-white/20 rounded hover:border-accent hover:text-accent transition-all duration-300 flex items-center gap-2">
+                        <i class="ph ph-shopping-cart"></i> License
+                    </a>
+                </div>
+            </div>
+            <p class="text-xs text-red-400/80 tracking-widest uppercase mt-4 hidden" id="audio-error"></p>
+        </div>
+    </section>
+
+    <footer class="mt-auto py-12 px-6 border-t border-white/10 bg-darker relative z-10">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex flex-col gap-2 text-center md:text-left">
+                <span class="text-xs tracking-widest uppercase text-textMuted">© 2026 LOGAN. All Rights Reserved.</span>
+                <div class="flex items-center justify-center md:justify-start gap-3 text-[10px] tracking-widest uppercase text-textMuted/50">
+                    <a href="privacy.html" class="hover:text-accent transition-colors">Privacy</a>
+                    <span>•</span>
+                    <a href="terms.html" class="hover:text-accent transition-colors">Terms</a>
+                    <span>•</span>
+                    <a href="cookies.html" class="hover:text-accent transition-colors">Cookies</a><span>•</span><button type="button" onclick="openCookieSettings()" class="uppercase tracking-widest hover:text-accent transition-colors">Cookie settings</button>
+                </div>
+            </div>
+            <div class="flex items-center gap-6 text-xl text-textMuted">
+                <a href="#" class="hover:text-accent transition-colors" aria-label="SoundCloud"><i class="ph ph-soundcloud-logo"></i></a>
+                <a href="#" class="hover:text-accent transition-colors" aria-label="Instagram"><i class="ph ph-instagram-logo"></i></a>
+                <a href="#" class="hover:text-accent transition-colors" aria-label="YouTube"><i class="ph ph-youtube-logo"></i></a>
+            </div>
+            <div>
+                <a href="booking.html" class="text-xs tracking-widest uppercase text-textMuted hover:text-accent transition-colors border-b border-transparent hover:border-accent pb-1">Booking & Inquiries</a>
+            </div>
+        </div>
+    </footer>
+
+    <audio id="audio" src="assets/song1.mp3" preload="metadata"></audio>
+
+<script>
+(() => {
+    // ---- Edit the track details here ----
+    const TRACK = { title: "Example", bpm: 140, genre: "Ambient Trap", price: "9.99" };
+
+    document.getElementById('hero-title').textContent = TRACK.title;
+    document.getElementById('track-title').textContent = TRACK.title;
+    document.getElementById('track-meta').textContent = `${TRACK.bpm} BPM • ${TRACK.genre}`;
+    document.getElementById('track-price').textContent = `£${TRACK.price}`;
+
+    const audio = document.getElementById('audio');
+    const stage = document.getElementById('stage');
+    const heroPlay = document.getElementById('hero-play');
+    const rowPlay = document.getElementById('row-play');
+    const rowIcon = document.getElementById('row-icon');
+    const seek = document.getElementById('seek');
+    const progress = document.getElementById('progress');
+    const tCur = document.getElementById('time-current');
+    const tTot = document.getElementById('time-total');
+    const errEl = document.getElementById('audio-error');
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // ---------- Player ----------
+    const fmt = s => isFinite(s) ? `${Math.floor(s / 60)}:${Math.floor(s % 60).toString().padStart(2, '0')}` : '0:00';
+    let ctx, analyser, freq;
+
+    function setupAudioGraph() {
+        if (ctx) return;
+        ctx = new (window.AudioContext || window.webkitAudioContext)();
+        const src = ctx.createMediaElementSource(audio);
+        analyser = ctx.createAnalyser();
+        analyser.fftSize = 8192;              // fine frequency detail so every channel moves on its own
+        analyser.smoothingTimeConstant = 0.5;
+        analyser.minDecibels = -95;           // pick up quieter detail
+        analyser.maxDecibels = -25;
+        src.connect(analyser);
+        analyser.connect(ctx.destination);
+        freq = new Uint8Array(analyser.frequencyBinCount);
+    }
+
+    async function toggle() {
+        setupAudioGraph();
+        await ctx.resume();
+        if (audio.paused) {
+            try { await audio.play(); } catch (e) { showError(); }
+        } else audio.pause();
+    }
+    function syncButtons() {
+        const playing = !audio.paused;
+        rowIcon.classList.toggle('ph-play-circle', !playing);
+        rowIcon.classList.toggle('ph-pause-circle', playing);
+        rowIcon.classList.toggle('text-accent', playing);
+        rowPlay.setAttribute('aria-label', playing ? 'Pause track' : 'Play track');
+        heroPlay.setAttribute('aria-label', (playing ? 'Pause ' : 'Play ') + TRACK.title);
+    }
+    function showError() {
+        errEl.textContent = 'Track not found. Add the file at assets/song1.mp3.';
+        errEl.classList.remove('hidden');
+    }
+
+    stage.addEventListener('click', toggle); // title button click bubbles here too
+    rowPlay.addEventListener('click', toggle);
+    audio.addEventListener('play', syncButtons);
+    audio.addEventListener('pause', syncButtons);
+    audio.addEventListener('ended', () => { audio.currentTime = 0; syncButtons(); });
+    audio.addEventListener('error', showError);
+    audio.addEventListener('loadedmetadata', () => { tTot.textContent = fmt(audio.duration); });
+    audio.addEventListener('timeupdate', () => {
+        const pct = audio.duration ? (audio.currentTime / audio.duration) * 100 : 0;
+        progress.style.width = pct + '%';
+        seek.setAttribute('aria-valuenow', Math.round(pct));
+        tCur.textContent = fmt(audio.currentTime);
+    });
+    seek.addEventListener('click', e => {
+        if (!audio.duration) return;
+        const r = seek.getBoundingClientRect();
+        audio.currentTime = ((e.clientX - r.left) / r.width) * audio.duration;
+    });
+    seek.addEventListener('keydown', e => {
+        if (!audio.duration) return;
+        if (e.key === 'ArrowRight') audio.currentTime = Math.min(audio.duration, audio.currentTime + 5);
+        if (e.key === 'ArrowLeft') audio.currentTime = Math.max(0, audio.currentTime - 5);
+    });
+
+    // ---------- Segment clock (behind the EQ) ----------
+    const CLOCK_MODE = 'track';          // 'track' = elapsed track time (MM:SS), 'time' = time of day (HH:MM)
+    const LIT = '#ECE9E2', UNLIT = 'rgba(236,233,226,0.05)';   // warm off-white
+    const SLANT = 8;                     // degrees of forward lean
+    const clock = document.getElementById('clock');
+    const NS = 'http://www.w3.org/2000/svg';
+    const DW = 60, DH = 100, T = 10, G = 1.6;   // digit width, height, segment thickness, gap
+    const DIGITS = { 0:'abcdef', 1:'bc', 2:'abged', 3:'abgcd', 4:'fgbc', 5:'afgcd', 6:'afgedc', 7:'abc', 8:'abcdefg', 9:'abcdfg' };
+
+    const hSeg = (x0, x1, y) => [[x0+G, y], [x0+G+T/2, y-T/2], [x1-G-T/2, y-T/2], [x1-G, y], [x1-G-T/2, y+T/2], [x0+G+T/2, y+T/2]];
+    const vSeg = (x, y0, y1) => [[x, y0+G], [x+T/2, y0+G+T/2], [x+T/2, y1-G-T/2], [x, y1-G], [x-T/2, y1-G-T/2], [x-T/2, y0+G+T/2]];
+    function segShapes() {
+        const L = T/2, R = DW - T/2, Tp = T/2, M = DH/2, B = DH - T/2;
+        return { a: hSeg(L, R, Tp), g: hSeg(L, R, M), d: hSeg(L, R, B),
+                 f: vSeg(L, Tp, M), b: vSeg(R, Tp, M), e: vSeg(L, M, B), c: vSeg(R, M, B) };
+    }
+    const shapes = segShapes();
+    // One group holds every character so the whole readout leans together
+    const face = document.createElementNS(NS, 'g');
+    const lean = Math.tan(SLANT * Math.PI / 180) * DH;
+    face.setAttribute('transform', `translate(${lean},0) skewX(${-SLANT})`);
+    clock.appendChild(face);
+    const slots = [];
+    const xs = [0, 74, 186, 260];            // two digits, colon, two digits
+    xs.forEach(x => {
+        const g = document.createElementNS(NS, 'g');
+        g.setAttribute('transform', `translate(${x},0)`);
+        const segs = {};
+        for (const k in shapes) {
+            const poly = document.createElementNS(NS, 'polygon');
+            poly.setAttribute('points', shapes[k].map(p => p.join(',')).join(' '));
+            poly.setAttribute('fill', UNLIT);
+            g.appendChild(poly); segs[k] = poly;
+        }
+        face.appendChild(g); slots.push(segs);
+    });
+    const dots = [30, 70].map(y => {
+        const r = document.createElementNS(NS, 'rect');
+        r.setAttribute('x', 162); r.setAttribute('y', y - 5); r.setAttribute('width', 10); r.setAttribute('height', 10);
+        r.setAttribute('fill', LIT); face.appendChild(r); return r;
+    });
+    clock.setAttribute('viewBox', `-4 -4 ${328 + lean} 108`);
+
+    let lastClock = '';
+    function updateClock() {
+        let a, b, blinkOn;
+        if (CLOCK_MODE === 'time') {
+            const d = new Date(); a = d.getHours(); b = d.getMinutes(); blinkOn = d.getMilliseconds() < 500;
+        } else {
+            const t = audio.currentTime || 0; a = Math.floor(t / 60) % 100; b = Math.floor(t % 60);
+            blinkOn = audio.paused || (t % 1) < 0.5;
+        }
+        const str = String(a).padStart(2, '0') + String(b).padStart(2, '0') + (blinkOn ? '1' : '0');
+        if (str === lastClock) return;
+        lastClock = str;
+        for (let i = 0; i < 4; i++) {
+            const on = DIGITS[str[i]];
+            for (const k in slots[i]) slots[i][k].setAttribute('fill', on.includes(k) ? LIT : UNLIT);
+        }
+        dots.forEach(d => d.setAttribute('fill', blinkOn ? LIT : UNLIT));
+    }
+
+    // ---------- Ink graphic EQ ----------
+    const eq = document.getElementById('eq');
+    const ec = eq.getContext('2d');
+    const MAX_BARS = 320;        // channel count on wide screens
+    const BAR_SPACING = 4;       // min px between lines; sets the count on smaller screens
+    const F_LO = 35, F_HI = 15000;   // most MP3s roll off above ~16 kHz
+    const EQ_INK = '#f4f4f5';
+    let EQ_BARS = MAX_BARS, bars, peaks, peakVel;
+    let eqW = 0, eqH = 0;
+
+    function resizeEq() {
+        const dpr = Math.min(devicePixelRatio || 1, 2);
+        eqW = eq.clientWidth; eqH = eq.clientHeight;
+        eq.width = Math.round(eqW * dpr); eq.height = Math.round(eqH * dpr);
+        ec.setTransform(dpr, 0, 0, dpr, 0, 0);
+        const n = Math.max(48, Math.min(MAX_BARS, Math.floor(eqW / BAR_SPACING)));
+        if (n !== EQ_BARS || !bars) {
+            EQ_BARS = n;
+            bars = new Float32Array(n); peaks = new Float32Array(n); peakVel = new Float32Array(n);
+        }
+    }
+    new ResizeObserver(resizeEq).observe(eq); resizeEq();
+
+    // Frequency labels along the bottom
+    const AXIS = [[50, '50'], [100, '100'], [200, '200'], [500, '500'], [1000, '1k'], [2000, '2k'], [5000, '5k'], [10000, '10k Hz']];
+    const MOBILE_HIDE = [200, 2000];
+    const axisEl = document.getElementById('freq-axis');
+    AXIS.forEach(([f, label]) => {
+        const pct = Math.log(f / F_LO) / Math.log(F_HI / F_LO) * 100;
+        const tick = document.createElement('div');
+        tick.className = 'absolute bottom-3 -translate-x-1/2 flex flex-col items-center gap-1' + (MOBILE_HIDE.includes(f) ? ' hidden md:flex' : '');
+        tick.style.left = pct + '%';
+        tick.innerHTML = `<span class="block w-px h-1.5 bg-white/40"></span><span class="text-[9px] md:text-[10px] tracking-widest text-white/50 tabular-nums whitespace-nowrap">${label}</span>`;
+        axisEl.appendChild(tick);
+    });
+
+    // Value at a frequency: interpolate between FFT bins at the low end, take the max over the range higher up
+    function sample(f0, f1) {
+        const hz = ctx.sampleRate / analyser.fftSize;
+        const b0 = f0 / hz, b1 = f1 / hz;
+        if (b1 - b0 < 1) {
+            const c = (b0 + b1) / 2, i = Math.floor(c), t = c - i;
+            return (freq[i] * (1 - t) + freq[Math.min(i + 1, freq.length - 1)] * t) / 255;
+        }
+        let v = 0;
+        for (let j = Math.floor(b0); j <= Math.min(Math.ceil(b1), freq.length - 1); j++) v = Math.max(v, freq[j]);
+        return v / 255;
+    }
+
+    function drawEq(time) {
+        const live = ctx && !audio.paused;
+        if (live) analyser.getByteFrequencyData(freq);
+        for (let i = 0; i < EQ_BARS; i++) {
+            let v = 0;
+            if (live) {
+                const f0 = F_LO * Math.pow(F_HI / F_LO, i / EQ_BARS);
+                const f1 = F_LO * Math.pow(F_HI / F_LO, (i + 1) / EQ_BARS);
+                v = Math.pow(sample(f0, f1), 1.4) * (0.85 + Math.pow(i / EQ_BARS, 1.3) * 1.6); // treble is naturally quieter, so tilt it up
+            }
+            bars[i] += (Math.min(v, 1) - bars[i]) * (v > bars[i] ? 0.55 : 0.12);
+            if (bars[i] >= peaks[i]) { peaks[i] = bars[i]; peakVel[i] = 0; }
+            else { peakVel[i] += 0.0022; peaks[i] = Math.max(bars[i], peaks[i] - peakVel[i]); }
+        }
+
+        // Fade instead of clear, so strokes leave a faint bleed
+        ec.globalCompositeOperation = 'destination-out';
+        ec.fillStyle = reduced ? 'rgba(0,0,0,1)' : 'rgba(0,0,0,0.35)';
+        ec.fillRect(0, 0, eqW, eqH);
+        ec.globalCompositeOperation = 'source-over';
+
+        const mid = eqH / 2, step = eqW / EQ_BARS, maxH = mid - 12;
+        ec.strokeStyle = EQ_INK; ec.fillStyle = EQ_INK; ec.lineCap = 'round';
+
+        ec.globalAlpha = 0.3; ec.lineWidth = 0.5;
+        ec.beginPath(); ec.moveTo(0, mid); ec.lineTo(eqW, mid); ec.stroke();
+
+        for (let i = 0; i < EQ_BARS; i++) {
+            const x = step * (i + 0.5);
+            const wob = reduced ? 0 : Math.sin(time * 3 + i * 0.7) * 0.6 * bars[i];
+            const h = Math.max(0.5, bars[i] * maxH);
+            ec.globalAlpha = 0.12; ec.lineWidth = 3;
+            ec.beginPath(); ec.moveTo(x + wob, mid - h); ec.lineTo(x - wob, mid + h); ec.stroke();
+            ec.globalAlpha = 0.95; ec.lineWidth = 1;
+            ec.beginPath(); ec.moveTo(x + wob, mid - h); ec.lineTo(x - wob, mid + h); ec.stroke();
+            if (peaks[i] > 0.04) {
+                const ph = peaks[i] * maxH + 4, r = 0.8 + peaks[i] * 0.9;
+                ec.globalAlpha = 0.8;
+                ec.beginPath();
+                ec.arc(x, mid - ph, r, 0, Math.PI * 2);
+                ec.moveTo(x + r, mid + ph); ec.arc(x, mid + ph, r, 0, Math.PI * 2);
+                ec.fill();
+            }
+        }
+        ec.globalAlpha = 1;
+    }
+
+    // Only draw while the hero is on screen
+    let visible = true;
+    new IntersectionObserver(([e]) => { visible = e.isIntersecting; }).observe(stage);
+    function frame(now) {
+        if (visible) { drawEq(now / 1000); updateClock(); }
+        requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>
